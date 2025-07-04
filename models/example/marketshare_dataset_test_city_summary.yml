@@ -1,0 +1,16 @@
+models:
+  - name: marketshare_dataset_test_city_summary
+    columns:
+      - name: city_proxy
+      - name: student_letting_agents
+        data_tests:
+          - not_null
+      - name: clients
+        data_tests:
+          - not_null
+      - name: student_portfolio
+        data_tests:
+          - not_null
+      - name: clients_student_portfolio
+        data_tests:
+          - not_null

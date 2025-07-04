@@ -1,0 +1,29 @@
+models:
+- name: marketshare_dataset_test
+  description: This model consolidates data from Salesforce accounts, opportunities,
+    and leads to provide a comprehensive view of market share. It categorizes entities
+    as customers or prospects and identifies their associated city, postal code, and
+    student portfolio details.
+  columns:
+  - name: salesforce_18_digit_id
+    tests:
+      - unique
+      - not_null
+    description: A unique identifier for Salesforce records, ensuring each entity
+      is distinct.
+  - name: company
+    description: The name of the company associated with the Salesforce record.
+  - name: associated_city
+    description: The city associated with the company or entity.
+  - name: postcode
+    description: The postal code for the company's billing address.
+  - name: total_student_portfolio_c
+    description: The total student portfolio associated with the company, indicating
+      the number of students involved.
+  - name: account_type
+    description: The type of account, specifying the nature of the business relationship.
+  - name: category
+    description: The classification of the entity as either a 'Customer' or 'Prospect'.
+  - name: sf_object
+    description: The Salesforce object type, indicating whether the record is an 'Account',
+      'Opportunity', or 'Lead'.

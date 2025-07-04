@@ -10,7 +10,7 @@ WITH active_customers AS (
         name AS company,
         associated_city_c AS associated_city,
         billing_postal_code AS postcode,
-        total_student_portfolio_c,
+        total_student_portfolio_c AS total_student_portfolio,
         account_type_c AS account_type,
         'Customer' AS category,
         'Account' AS sf_object
@@ -29,7 +29,7 @@ active_opps AS (
         ac.name AS company,
         ac.associated_city_c AS associated_city,
         ac.billing_postal_code AS postcode,
-        ac.total_student_portfolio_c,
+        ac.total_student_portfolio_c AS total_student_portfolio,
         ac.account_type_c AS account_type,
         'Prospect' AS category,
         'Opportunity' AS sf_object

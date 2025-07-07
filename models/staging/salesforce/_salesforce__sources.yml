@@ -9,11 +9,16 @@ sources:
       - name: account
         description: Depending on the record_type this can represent agents, PBSA/BTR or Contracts
       - name: account_history
-      - name: city_c
-      - name: enquiry_c
+      - name: city
+        identifier: city_c
+      - name: enquiry
+        identifier: enquiry_c
       - name: lead
-      - name: meter_reading_c
+      - name: meter_reading
+        identifier: meter_reading_c
       - name: opportunity
-      - name: property_c
-      - name: territory_c
+      - name: property
+        identifier: property_c
+      - name: territory
+        identifier: territory_c
       - name: user

@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+
 
 SELECT
 REGEXP_SUBSTR(postcode,'[A-Z]+') AS city_proxy,

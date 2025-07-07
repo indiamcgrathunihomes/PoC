@@ -1,7 +1,4 @@
 
-{{ config(materialized='table') }}
-
-
 
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OinMAE/view
 WITH active_customers AS (

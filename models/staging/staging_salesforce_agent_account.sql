@@ -13,6 +13,6 @@
         date_closed_c AS date_closed,
         date_won_c AS date_won,
     FROM
-        salesforce.account
+        from {{ source('salesforce', 'account') }}
     WHERE
         record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent

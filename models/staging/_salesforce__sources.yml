@@ -4,8 +4,10 @@ sources:
   - name: salesforce
     database: pc_fivetran_db 
     schema:  salesforce
+    description: This is some SalesForce tables pulled via FiveTran
     tables:
       - name: account
+        description: Depending on the record_type this can represent agents, PBSA/BTR or Contracts
       - name: account_history
       - name: city_c
       - name: enquiry_c

@@ -2,8 +2,8 @@ version: 2
 
 sources:
   - name: salesforce
-    database: PC_FIVETRAN_DB 
-    schema: salesforce  
+    database: pc_fivetran_db 
+    schema:  salesforce
     tables:
       - name: account
       - name: account_history

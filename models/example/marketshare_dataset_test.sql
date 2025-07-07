@@ -12,9 +12,10 @@ WITH active_customers AS (
         'Customer' AS category,
         'Account' AS sf_object
     FROM
-      {{ ref ('staging_salesforce_agent_account')}}
+      {{ ref ('staging_salesforce_account')}}
     WHERE
-      date_closed IS NULL
+      record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
+      AND date_closed IS NULL
         AND date_won IS NOT NULL
 ),
 

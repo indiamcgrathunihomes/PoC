@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: salesforce
+    database: PC_FIVETRAN_DB 
+    schema: salesforce  
+    tables:
+      - name: account
+      - name: account_history
+      - name: city_c
+      - name: enquiry_c
+      - name: lead
+      - name: meter_reading_c
+      - name: opportunity
+      - name: property_c
+      - name: territory_c
+      - name: user

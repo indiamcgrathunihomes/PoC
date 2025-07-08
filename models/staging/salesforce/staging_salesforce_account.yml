@@ -1,11 +1,14 @@
 models:
-- name: staging_salesforce_agent_account
+- name: staging_salesforce_account
   description: This model filters and cleans Salesforce account data to focus on Landlord/Agent
     accounts. It removes trailing '_c' from field names and selects relevant fields
     for analysis.
   columns:
   - name: id
     description: Unique identifier for the account.
+    tests:
+      - not_null
+      - unique
   - name: name
     description: Name of the account.
   - name: associated_city

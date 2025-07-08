@@ -5,7 +5,7 @@ models:
     for analysis.
   columns:
   - name: id
-    description: Unique identifier for the account.
+    description: '{{ doc("salesforce_18_digit_id")}}'
     data_tests:
       - not_null
       - unique

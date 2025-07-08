@@ -8,6 +8,11 @@ sources:
     tables:
       - name: account
         description: Depending on the record_type this can represent agents, PBSA/BTR or Contracts
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
       - name: account_history
       - name: city
         identifier: city_c

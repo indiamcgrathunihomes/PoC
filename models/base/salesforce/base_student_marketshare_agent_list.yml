@@ -6,7 +6,7 @@ models:
     student portfolio details.
   columns:
   - name: salesforce_18_digit_id
-    tests:
+    data_tests:
       - unique
       - not_null
     description: A unique identifier for Salesforce records, ensuring each entity

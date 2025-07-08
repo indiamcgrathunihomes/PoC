@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: salesforce
+    database: pc_fivetran_db 
+    schema:  salesforce
+    description: This is some SalesForce tables pulled via FiveTran
+    tables:
+      - name: account
+        description: Depending on the record_type this can represent agents, PBSA/BTR or Contracts
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+      - name: account_history
+      - name: city
+        identifier: city_c
+      - name: enquiry
+        identifier: enquiry_c
+      - name: lead
+      - name: meter_reading
+        identifier: meter_reading_c
+      - name: opportunity
+      - name: property
+        identifier: property_c
+      - name: territory
+        identifier: territory_c
+      - name: user

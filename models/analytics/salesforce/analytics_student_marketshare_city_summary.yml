@@ -1,5 +1,5 @@
 models:
-  - name: marketshare_dataset_test_city_summary
+  - name: analytics_student_marketshare_city_summary
     columns:
       - name: city_proxy
       - name: student_letting_agents

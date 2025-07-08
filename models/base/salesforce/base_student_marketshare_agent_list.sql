@@ -1,25 +1,22 @@
 
-{{ config(materialized='table') }}
-
-
 
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OinMAE/view
 WITH active_customers AS (
     SELECT
         id AS salesforce_18_digit_id,
         name AS company,
-        associated_city_c AS associated_city,
+        associated_city,
         billing_postal_code AS postcode,
-        total_student_portfolio_c AS total_student_portfolio,
-        account_type_c AS account_type,
+        total_student_portfolio,
+        account_type,
         'Customer' AS category,
         'Account' AS sf_object
     FROM
-        salesforce.account
+      {{ ref ('staging_salesforce_account')}}
     WHERE
-        record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
-        AND date_closed_c IS NULL
-        AND date_won_c IS NOT NULL
+      record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
+      AND date_closed IS NULL
+        AND date_won IS NOT NULL
 ),
 
 active_opps AS (

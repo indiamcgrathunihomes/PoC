@@ -1,5 +1,5 @@
 models:
-- name: marketshare_dataset_test
+- name: base_student_marketshare_agent_list
   description: This model consolidates data from Salesforce accounts, opportunities,
     and leads to provide a comprehensive view of market share. It categorizes entities
     as customers or prospects and identifies their associated city, postal code, and

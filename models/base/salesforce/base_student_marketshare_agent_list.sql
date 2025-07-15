@@ -49,6 +49,9 @@ valid_leads AS (
         associated_city,
         postal_code AS postcode,
         percentage_student AS total_student_portfolio,
+        NULL AS account_type,
+        'Prospect' AS category,
+        'Lead' AS sf_object
 
     FROM
          {{ ref ('staging_salesforce_lead')}}

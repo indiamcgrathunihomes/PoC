@@ -8,7 +8,7 @@
     {%- if env == 'prod' -%}
       {{ custom_schema_name }}
     {%- else -%}
-      {{ env ~ '_' ~ custom_schema_name }}
+      {{ env }}
     {%- endif %}
 
   {# 2) No +schema? Fall back to env (or target.schema) #}

@@ -24,19 +24,19 @@ active_opps AS (
  SELECT
         ac.id AS salesforce_18_digit_id,
         ac.name AS company,
-        ac.associated_city_c AS associated_city,
+        ac.associated_city,
         ac.billing_postal_code AS postcode,
-        ac.total_student_portfolio_c AS total_student_portfolio,
-        ac.account_type_c AS account_type,
+        ac.total_student_portfolio,
+        ac.account_type,
         'Prospect' AS category,
         'Opportunity' AS sf_object
     FROM
-        salesforce.opportunity op
-    LEFT JOIN salesforce.account ac ON op.account_id = ac.id
+          {{ ref ('staging_salesforce_opportunity')}} op
+    LEFT JOIN {{ ref ('staging_salesforce_account')}} ac ON op.account_id = ac.id
     WHERE
         ac.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
-        AND ac.date_closed_c IS NULL
-        AND ac.date_won_c IS NULL
+        AND ac.date_closed IS NULL
+        AND ac.date_won IS NULL
         AND op.stage_name IN ('Renewal','Fact Find','Meeting Booked','Negotiation','Agreement Preparation','Agreement Sent','Trial')
 
 ),
@@ -46,17 +46,18 @@ valid_leads AS (
  SELECT
         id AS salesforce_18_digit_id,
         company,
-        associated_city_c AS associated_city,
+        associated_city,
         postal_code AS postcode,
-        percentage_student_c AS total_student_portfolio,
+        percentage_student AS total_student_portfolio,
         NULL AS account_type,
         'Prospect' AS category,
         'Lead' AS sf_object
+
     FROM
-        salesforce.lead
+         {{ ref ('staging_salesforce_lead')}}
     WHERE
         record_type_id = '012Uc000000Gue9IAC' AND  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
-        main_contact_c = TRUE
+        main_contact = TRUE
         AND status <> 'Converted'
         AND status IN ('Unqualified this Season','New','Working','Nurture')
 

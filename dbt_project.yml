@@ -37,5 +37,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   unihomes_data_and_analytics:
- 
     +materialized: table
+
+    analytics:
+      +schema: analytics
+
+    base:
+      +schema: base
+
+    staging:
+      +schema: staging
+  

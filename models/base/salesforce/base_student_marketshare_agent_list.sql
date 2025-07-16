@@ -26,7 +26,7 @@ active_opps AS (
         ac.name AS company,
         ac.associated_city,
         ac.billing_postal_code AS postcode,
-        ac.total_student_portfolio,
+        op.total_opportunity_quantity AS total_student_portfolio,
         ac.account_type,
         'Prospect' AS category,
         'Opportunity' AS sf_object

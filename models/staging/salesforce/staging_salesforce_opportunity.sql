@@ -3,6 +3,7 @@ SELECT
         id,
         name,
         account_id,
-        stage_name
+        stage_name,
+        total_opportunity_quantity
      FROM
       {{ source('salesforce', 'opportunity') }}

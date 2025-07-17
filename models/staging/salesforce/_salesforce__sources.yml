@@ -29,3 +29,5 @@ sources:
       - name: user
       - name: opportunity_products
         identifier: opportunity_line_item
+      - name: record_types
+        identifier: record_type

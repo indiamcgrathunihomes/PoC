@@ -1,0 +1,11 @@
+models:
+- name: staging_salesforce_record_types
+  description: This model extracts and stages Salesforce record types for further
+    analysis. It provides a streamlined view of record type identifiers and their
+    corresponding developer names, facilitating easier integration and reference in
+    downstream processes.
+  columns:
+  - name: id
+    description: The unique identifier for each Salesforce record type.
+  - name: developer_name
+    description: The name assigned by developers to identify the record type.

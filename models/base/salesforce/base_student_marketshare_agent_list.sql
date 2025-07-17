@@ -26,13 +26,14 @@ active_opps AS (
         ac.name AS company,
         ac.associated_city,
         ac.billing_postal_code AS postcode,
-        op.total_student_portfolio,
+        oq.total_student_portfolio,
         ac.account_type,
         'Prospect' AS category,
         'Opportunity' AS sf_object
     FROM
-          {{ ref ('staging_salesforce_opportunity')}} op
+        {{ ref ('staging_salesforce_opportunity')}} op
     LEFT JOIN {{ ref ('staging_salesforce_account')}} ac ON op.account_id = ac.id
+    LEFT JOIN {{ ref ('staging_salesforce_opportunity_products')}} oq ON oq.opportunity_id = op.id
     WHERE
         ac.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
         AND ac.date_closed IS NULL

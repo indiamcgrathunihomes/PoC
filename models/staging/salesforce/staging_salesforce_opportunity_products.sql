@@ -1,9 +1,11 @@
+-- Removal of trailing '_c' from field names
+-- Filtering out deleted records
 SELECT
+    id,
     opportunity_id,
-    SUM(quantity) as total_student_portfolio
+    portfolio_type_c AS portfolio_type,
+    quantity
 FROM 
      {{ source('salesforce', 'opportunity_products') }}
 WHERE
-    portfolio_type_c = 'Student'
-GROUP BY
-    opportunity_id
+    is_deleted = FALSE

@@ -1,7 +1,5 @@
-
-
-
--- Only clean up I am doing is to remove trailing '_c' from field names
+-- Removal of trailing '_c' from field names
+-- Filtering out deleted records
     SELECT
         id,
         name,
@@ -11,7 +9,9 @@
         account_type_c AS account_type,
         record_type_id,
         date_closed_c AS date_closed,
-        date_won_c AS date_won,
+        date_won_c AS date_won
     FROM
       {{ source('salesforce', 'account') }}
+    WHERE
+        is_deleted = FALSE
     

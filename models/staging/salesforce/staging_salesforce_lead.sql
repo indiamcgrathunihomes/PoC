@@ -11,7 +11,8 @@
         main_contact_c AS main_contact,
         status,
         phone,
-        competitor_name_c AS competitor
+        competitor_name_c AS competitor,
+        email
     FROM
         {{ source('salesforce', 'lead') }}
     WHERE

@@ -27,3 +27,11 @@ models:
   - name: sf_object
     description: The Salesforce object type, indicating whether the record is an 'Account',
       'Opportunity', or 'Lead'.
+  - name: phone
+    description: The current phone number of the 'Lead' object record.
+  - name: competitor
+    description: The current stated competitor of the 'Opportunity' or 'Lead' object record.
+  - name: record_type
+    description: The associated record type of the salesforce object.
+  - name: email
+    description: The current email address of the 'Lead' object.

@@ -27,3 +27,5 @@ models:
     description: Phone number of the lead.
   - name: competitor
     description: Name of the main competitor for the lead
+  - name: email
+    description: Current email address of the lead.

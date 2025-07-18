@@ -15,7 +15,8 @@ WITH active_customers AS (
         'Account' AS sf_object,
         NULL AS phone,
         NULL as competitor,
-        typ.record_type
+        typ.record_type,
+        NULL AS email
     FROM
         {{ ref ('staging_salesforce_account')}} acc
         LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON acc.record_type_id = typ.id
@@ -41,7 +42,8 @@ active_opps AS (
         'Opportunity' AS sf_object,
         NULL AS phone,
         opp.competitor,
-        typ.record_type
+        typ.record_type,
+        NULL AS email
     FROM
         {{ ref ('staging_salesforce_opportunity')}} opp
         LEFT JOIN {{ ref ('staging_salesforce_account')}} acc ON opp.account_id = acc.id
@@ -82,7 +84,8 @@ valid_leads AS (
         'Lead' AS sf_object,
         lea.phone,
         lea.competitor,
-        typ.record_type
+        typ.record_type,
+        lea.email
     FROM
          {{ ref ('staging_salesforce_lead')}} lea
          LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON lea.record_type_id = typ.id

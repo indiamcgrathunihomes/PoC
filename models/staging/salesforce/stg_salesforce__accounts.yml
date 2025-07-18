@@ -1,5 +1,5 @@
 models:
-- name: staging_salesforce_account
+- name: stg_salesforce__accounts
   description: This model filters and cleans Salesforce account data to focus on Landlord/Agent
     accounts. It removes trailing '_c' from field names and selects relevant fields
     for analysis.

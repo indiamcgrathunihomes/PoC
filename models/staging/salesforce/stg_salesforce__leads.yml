@@ -1,5 +1,5 @@
 models:
-- name: staging_salesforce_lead
+- name: stg_salesforce__leads
   description: This model processes and cleans Salesforce lead data, removing trailing
     '_c' from field names and preparing it for further analysis or integration. It
     provides a structured view of lead information, including company details, contact

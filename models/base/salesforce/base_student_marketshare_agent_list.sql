@@ -18,8 +18,8 @@ WITH active_customers AS (
         typ.record_type,
         NULL AS email
     FROM
-        {{ ref ('staging_salesforce_account')}} acc
-        LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON acc.record_type_id = typ.id
+        {{ ref ('stg_salesforce__accounts')}} acc
+        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON acc.record_type_id = typ.id
     WHERE
         1=1
         AND acc.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
@@ -45,21 +45,21 @@ active_opps AS (
         typ.record_type,
         NULL AS email
     FROM
-        {{ ref ('staging_salesforce_opportunity')}} opp
-        LEFT JOIN {{ ref ('staging_salesforce_account')}} acc ON opp.account_id = acc.id
+        {{ ref ('stg_salesforce__opportunities')}} opp
+        LEFT JOIN {{ ref ('stg_salesforce__accounts')}} acc ON opp.account_id = acc.id
         LEFT JOIN
                     (
                         SELECT
                             opportunity_id,
                             SUM(quantity) AS total_student_portfolio
                         FROM
-                            {{ ref ('staging_salesforce_opportunity_products')}}
+                            {{ ref ('stg_salesforce__opportunity_products')}}
                         WHERE
                             portfolio_type = 'Student'
                         GROUP BY
                             opportunity_id
                     )   qty ON qty.opportunity_id = opp.id
-        LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON opp.record_type_id = typ.id
+        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON opp.record_type_id = typ.id
     WHERE
         1=1
         AND acc.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
@@ -87,8 +87,8 @@ valid_leads AS (
         typ.record_type,
         lea.email
     FROM
-         {{ ref ('staging_salesforce_lead')}} lea
-         LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON lea.record_type_id = typ.id
+         {{ ref ('stg_salesforce__leads')}} lea
+         LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON lea.record_type_id = typ.id
     WHERE
         1=1
         AND lea.record_type_id = '012Uc000000Gue9IAC'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent

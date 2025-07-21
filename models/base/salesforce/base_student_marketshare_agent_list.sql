@@ -16,7 +16,8 @@ WITH active_customers AS (
         NULL AS phone,
         NULL as competitor,
         typ.record_type,
-        NULL AS email
+        NULL AS email,
+        NULL AS stage,
     FROM
         {{ ref ('stg_salesforce__accounts')}} acc
         LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON acc.record_type_id = typ.id
@@ -43,7 +44,8 @@ active_opps AS (
         NULL AS phone,
         opp.competitor,
         typ.record_type,
-        NULL AS email
+        NULL AS email,
+        opp.stage_name AS stage
     FROM
         {{ ref ('stg_salesforce__opportunities')}} opp
         LEFT JOIN {{ ref ('stg_salesforce__accounts')}} acc ON opp.account_id = acc.id
@@ -85,7 +87,8 @@ valid_leads AS (
         lea.phone,
         lea.competitor,
         typ.record_type,
-        lea.email
+        lea.email,
+        NULL AS stage
     FROM
          {{ ref ('stg_salesforce__leads')}} lea
          LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON lea.record_type_id = typ.id

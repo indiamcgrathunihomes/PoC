@@ -35,3 +35,5 @@ models:
     description: The associated record type of the salesforce object.
   - name: email
     description: The current email address of the 'Lead' object.
+  - name: stage
+    description: The stage field for the 'Opportunity' object records.

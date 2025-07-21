@@ -1,0 +1,7 @@
+[sqlfluff]
+templater = dbt
+dialect = snowflake
+
+[sqlfluff:templater:dbt]
+project_dir = .
+# you can specify profiles_dir, profile, target if needed

@@ -1,18 +1,244 @@
 models:
 - name: stg_salesforce__opportunities
-  description: This model filters Salesforce opportunity data to include only Landlord/Agent
-    accounts and standardizes field names by removing trailing '_c'. It is used to
-    prepare opportunity data for further analysis and reporting.
+  description: This model processes Salesforce opportunity data, excluding deleted
+    records, and standardizes field names and timestamps. It provides a comprehensive
+    view of opportunities, including details such as account, campaign, and contact
+    information, as well as various metrics and status indicators.
   columns:
-  - name: id
+  - name: opportunity_id
     description: Unique identifier for the opportunity.
+    data_tests:
+      - unique
+      - not_null
+  - name: account_id
+    description: Identifier for the associated account.
+  - name: record_type_id
+    description: Identifier for the record type.
+  - name: campaign_id
+    description: Identifier for the associated campaign.
+  - name: pricebook_2_id
+    description: Identifier for the associated pricebook.
+  - name: owner_id
+    description: Identifier for the owner of the opportunity.
+  - name: created_by_id
+    description: Identifier for the user who created the opportunity.
+  - name: last_modified_by_id
+    description: Identifier for the user who last modified the opportunity.
+  - name: contact_id
+    description: Identifier for the associated contact.
+  - name: synced_quote_id
+    description: Identifier for the synced quote.
+  - name: last_amount_changed_history_id
+    description: Identifier for the last amount change history.
+  - name: last_close_date_changed_history_id
+    description: Identifier for the last close date change history.
+  - name: activity_metric_id
+    description: Identifier for the activity metric.
+  - name: activity_metric_rollup_id
+    description: Identifier for the activity metric rollup.
   - name: name
     description: Name of the opportunity.
-  - name: account_id
-    description: Identifier for the account associated with the opportunity.
+  - name: description
+    description: Description of the opportunity.
+  - name: type
+    description: Type of the opportunity.
+  - name: close_date
+    description: The date when the opportunity is expected to close.
+  - name: created_date
+    description: Timestamp when the opportunity was created.
+  - name: last_modified_date
+    description: Timestamp when the opportunity was last modified.
+  - name: system_modstamp
+    description: System modification timestamp.
+  - name: last_activity_date
+    description: The date of the last activity on the opportunity.
+  - name: last_stage_change_date
+    description: Timestamp of the last stage change.
+  - name: last_viewed_date
+    description: Timestamp when the opportunity was last viewed.
+  - name: last_referenced_date
+    description: Timestamp when the opportunity was last referenced.
+  - name: agreement_sent_date
+    description: The date when the agreement was sent.
+  - name: agreement_signed_date
+    description: The date when the agreement was signed.
+  - name: competitor_contract_end_date
+    description: The date when the competitor's contract ends.
+  - name: contract_end_date
+    description: The date when the contract ends.
+  - name: contract_start_date
+    description: The date when the contract starts.
+  - name: go_live_call_y_2
+    description: The date for the go-live call in year 2.
+  - name: go_live_call_year_1
+    description: The date for the go-live call in year 1.
+  - name: voided_date
+    description: The date when the opportunity was voided.
+  - name: callback_date_time
+    description: Timestamp for the callback date and time.
+  - name: fivetran_synced
+    description: Timestamp when the data was last synced by Fivetran.
+  - name: amount
+    description: The monetary value of the opportunity.
+  - name: is_deleted
+    description: Indicates if the opportunity is deleted.
   - name: stage_name
-    description: Current stage of the opportunity in the sales process.
-  - name: competitor
-    description: Name of the competitor associated with the opportunity.
-  - name: record_type_id
-    description: The id of the opportunity record type.
+    description: Name of the current stage of the opportunity.
+  - name: probability
+    description: Probability of winning the opportunity.
+  - name: total_opportunity_quantity
+    description: Total quantity associated with the opportunity.
+  - name: next_step
+    description: Next step in the opportunity process.
+  - name: lead_source
+    description: Source of the lead for the opportunity.
+  - name: is_closed
+    description: Indicates if the opportunity is closed.
+  - name: is_won
+    description: Indicates if the opportunity is won.
+  - name: forecast_category
+    description: Forecast category of the opportunity.
+  - name: forecast_category_name
+    description: Name of the forecast category.
+  - name: has_opportunity_line_item
+    description: Indicates if the opportunity has line items.
+  - name: push_count
+    description: Number of times the opportunity has been pushed.
+  - name: fiscal_quarter
+    description: Fiscal quarter of the opportunity.
+  - name: fiscal_year
+    description: Fiscal year of the opportunity.
+  - name: fiscal
+    description: Fiscal period of the opportunity.
+  - name: has_open_activity
+    description: Indicates if there are open activities for the opportunity.
+  - name: has_overdue_task
+    description: Indicates if there are overdue tasks for the opportunity.
+  - name: advertising_platforms
+    description: Advertising platforms associated with the opportunity.
+  - name: agreement_signed_by
+    description: Person who signed the agreement.
+  - name: agreement_status
+    description: Status of the agreement.
+  - name: approached_by_competitor
+    description: Indicates if the opportunity was approached by a competitor.
+  - name: area_of_interest
+    description: Area of interest related to the opportunity.
+  - name: associated_city
+    description: City associated with the opportunity.
+  - name: billing_model
+    description: Billing model for the opportunity.
+  - name: bills_included
+    description: Indicates if bills are included in the opportunity.
+  - name: crm_provider
+    description: CRM provider for the opportunity.
+  - name: competitor_commission_per_tenant
+    description: Competitor's commission per tenant.
+  - name: competitor_name
+    description: Name of the competitor.
+  - name: drivers
+    description: Drivers associated with the opportunity.
+  - name: feed_provider
+    description: Feed provider for the opportunity.
+  - name: letting_type
+    description: Type of letting for the opportunity.
+  - name: percentage_of_portfolio_let
+    description: Percentage of the portfolio that is let.
+  - name: portfolio_size
+    description: Size of the portfolio.
+  - name: require_advertising
+    description: Indicates if advertising is required for the opportunity.
+  - name: void_reason
+    description: Reason for voiding the opportunity.
+  - name: lost_reason
+    description: Reason for losing the opportunity.
+  - name: count
+    description: Count associated with the opportunity.
+  - name: maximum_number_of_live_properties
+    description: Maximum number of live properties.
+  - name: specific_terms
+    description: Specific terms related to the opportunity.
+  - name: percentage_professional
+    description: Percentage of professional clients.
+  - name: percentage_student
+    description: Percentage of student clients.
+  - name: contact_type
+    description: Type of contact for the opportunity.
+  - name: blockers
+    description: Blockers associated with the opportunity.
+  - name: previous_relationship
+    description: Previous relationship related to the opportunity.
+  - name: contract_length
+    description: Length of the contract.
+  - name: mobile_phone
+    description: Mobile phone number associated with the opportunity.
+  - name: special_condition
+    description: Special conditions related to the opportunity.
+  - name: listings
+    description: Listings associated with the opportunity.
+  - name: lost_reason_description
+    description: Description of the reason for losing the opportunity.
+  - name: portfolio_notes
+    description: Notes related to the portfolio.
+  - name: realistic_sharer_portfolio
+    description: Realistic sharer portfolio size.
+  - name: realistic_student_portfolio
+    description: Realistic student portfolio size.
+  - name: other_blocker_description
+    description: Description of other blockers.
+  - name: high_priority
+    description: Indicates if the opportunity is high priority.
+  - name: auto_renewal
+    description: Indicates if the contract has auto-renewal.
+  - name: btr_pbsa
+    description: Build-to-rent or purpose-built student accommodation.
+  - name: fuel_included
+    description: Indicates if fuel is included.
+  - name: broadband_included
+    description: Indicates if broadband is included.
+  - name: commision_percentage
+    description: Commission percentage for the opportunity.
+  - name: number_of_buildings
+    description: Number of buildings associated with the opportunity.
+  - name: tv_license_included
+    description: Indicates if TV license is included.
+  - name: total_units
+    description: Total units associated with the opportunity.
+  - name: water_included
+    description: Indicates if water is included.
+  - name: marketing_source
+    description: Source of marketing for the opportunity.
+  - name: marketing_qualified
+    description: Indicates if the opportunity is marketing qualified.
+  - name: current_engagement_level
+    description: Current engagement level with the opportunity.
+  - name: key_performance_indicators
+    description: Key performance indicators for the opportunity.
+  - name: marketing_contribution
+    description: Marketing contribution for the opportunity.
+  - name: partner_satisfaction_rating
+    description: Rating of partner satisfaction.
+  - name: partnership_status
+    description: Status of the partnership.
+  - name: advertising_opportunities
+    description: Advertising opportunities related to the opportunity.
+  - name: exclusivity_terms
+    description: Exclusivity terms related to the opportunity.
+  - name: committed_to_deliver_expected_contracts
+    description: Indicates if committed to deliver expected contracts.
+  - name: agent_understands_to_return_contracts
+    description: Indicates if the agent understands to return contracts.
+  - name: expected_contracts_to_be_returned
+    description: Expected number of contracts to be returned.
+  - name: tenancy_sign_up_process
+    description: Process for tenancy sign-up.
+  - name: utility_form_sign_up_process
+    description: Process for utility form sign-up.
+  - name: enquiry_to_form_send_timeframe_days
+    description: Timeframe in days from enquiry to form send.
+  - name: fivetran_deleted
+    description: Indicates if the record is deleted by Fivetran.
+  - name: create_renewal
+    description: Indicates if a renewal is created.
+  - name: recycled_main_lead
+    description: Recycled main lead information.

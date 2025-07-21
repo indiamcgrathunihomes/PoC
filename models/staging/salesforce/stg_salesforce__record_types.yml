@@ -1,11 +1,40 @@
 models:
 - name: stg_salesforce__record_types
-  description: This model extracts and stages Salesforce record types for further
-    analysis. It provides a streamlined view of record type identifiers and their
-    corresponding developer names, facilitating easier integration and reference in
-    downstream processes.
+  description: This model processes Salesforce record types data, transforming field
+    names to snake_case and cleaning timestamps. It provides a structured view of
+    record types, including metadata such as creation and modification details, business
+    process associations, and activity status.
   columns:
-  - name: id
-    description: The unique identifier for each Salesforce record type.
+  - name: record_type_id
+    description: Unique identifier for the record type.
+    data_tests:
+      - unique
+      - not_null
+  - name: business_process_id
+    description: Identifier for the associated business process.
+  - name: created_by_id
+    description: Identifier of the user who created the record type.
+  - name: last_modified_by_id
+    description: Identifier of the user who last modified the record type.
+  - name: name
+    description: Name of the record type.
+  - name: description
+    description: Description of the record type.
+  - name: created_date
+    description: Timestamp when the record type was created.
+  - name: last_modified_date
+    description: Timestamp when the record type was last modified.
+  - name: system_modstamp
+    description: System-generated timestamp for the last modification.
+  - name: fivetran_synced
+    description: Timestamp of the last sync with Fivetran.
   - name: developer_name
-    description: The name assigned by developers to identify the record type.
+    description: Developer-assigned name for the record type.
+  - name: namespace_prefix
+    description: Namespace prefix for the record type.
+  - name: sobject_type
+    description: Salesforce object type associated with the record type.
+  - name: is_active
+    description: Indicates whether the record type is active.
+  - name: fivetran_deleted
+    description: Indicates whether the record type has been deleted in Fivetran.

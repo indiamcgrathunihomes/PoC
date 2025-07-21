@@ -13,6 +13,9 @@ models:
   - name: record_id
     description: The unique identifier for each record, which can be an account, opportunity,
       or lead.
+    data_tests:
+      - unique
+      - not_null
   - name: company
     description: The name of the company associated with the record.
   - name: name

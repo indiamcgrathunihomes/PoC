@@ -4,7 +4,7 @@ with
 
     excluding_deleted_records as (select * from source where is_deleted = false),
 
-    snake_case_field_names_and_clean_timestamps as (ord
+    snake_case_field_names_and_clean_timestamps as (
         -- Original command was using macro and then compiled output shown here for consistency and visibilty of SF Field Aliases
         -- Original command was:   select {% raw %}{{ select_fields_structured('salesforce', 'lead') }}{% endraw %} from excluding_deleted_records
         select

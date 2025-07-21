@@ -15,13 +15,13 @@ WITH active_customers AS (
         'Account' AS sf_object,
         NULL AS phone,
         NULL as competitor,
-        typ.record_type,
+        typ.name AS record_type,
         NULL AS email,
         NULL AS stage,
         DATE(date_won) AS source_date
     FROM
         {{ ref ('stg_salesforce__accounts')}} acc
-        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON acc.record_type_id = typ.id
+        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON acc.record_type_id = typ.record_type_id
     WHERE
         1=1
         AND acc.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
@@ -33,7 +33,7 @@ active_opps AS (
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069QmDMAU/view
  SELECT
         acc.account_id AS salesforce_18_digit_id,
-        opp.id AS record_id,
+        opp.opportunity_id AS record_id,
         acc.name AS company,
         acc.name AS name,
         acc.associated_city,
@@ -43,8 +43,8 @@ active_opps AS (
         'Prospect' AS category,
         'Opportunity' AS sf_object,
         NULL AS phone,
-        opp.competitor,
-        typ.record_type,
+        opp.competitor_name AS competitor,
+        typ.name AS record_type,
         NULL AS email,
         opp.stage_name AS stage,
         DATE(opp.created_date) AS source_date
@@ -55,15 +55,15 @@ active_opps AS (
                     (
                         SELECT
                             opportunity_id,
-                            SUM(quantity) AS total_student_portfolio
+                            SUM(quantity_0) AS total_student_portfolio
                         FROM
                             {{ ref ('stg_salesforce__opportunity_products')}}
                         WHERE
                             portfolio_type = 'Student'
                         GROUP BY
                             opportunity_id
-                    )   qty ON qty.opportunity_id = opp.id
-        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON opp.record_type_id = typ.id
+                    )   qty ON qty.opportunity_id = opp.opportunity_id
+        LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON opp.record_type_id = typ.record_type_id
     WHERE
         1=1
         AND acc.record_type_id = '012360000009cYwAAI' -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
@@ -76,8 +76,8 @@ active_opps AS (
 valid_leads AS (
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OyvMAE/view
  SELECT
-        lea.id AS salesforce_18_digit_id,
-        lea.id AS record_id,
+        lea.lead_id AS salesforce_18_digit_id,
+        lea.lead_id AS record_id,
         lea.company,
         lea.name AS name,
         lea.associated_city,
@@ -87,14 +87,14 @@ valid_leads AS (
         'Prospect' AS category,
         'Lead' AS sf_object,
         lea.phone,
-        lea.competitor,
-        typ.record_type,
+        lea.competitor_name AS competitor,
+        typ.name AS record_type,
         lea.email,
         NULL AS stage,
         DATE(lea.created_date) AS source_date
     FROM
          {{ ref ('stg_salesforce__leads')}} lea
-         LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON lea.record_type_id = typ.id
+         LEFT JOIN {{ ref('stg_salesforce__record_types') }} typ ON lea.record_type_id = typ.record_type_id
     WHERE
         1=1
         AND lea.record_type_id = '012Uc000000Gue9IAC'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent

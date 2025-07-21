@@ -1,0 +1,62 @@
+models:
+- name: stg_salesforce__opportunity_products
+  description: This model processes Salesforce opportunity product data, excluding
+    deleted records and converting field names to snake_case. It provides a structured
+    view of opportunity products, including details such as pricing, quantity, and
+    timestamps for creation and modification.
+  columns:
+  - name: opportunity_product_id
+    description: Unique identifier for the opportunity product.
+    data_tests:
+      - unique
+      - not_null
+  - name: opportunity_id
+    description: Identifier for the associated opportunity.
+  - name: pricebook_entry_id
+    description: Identifier for the pricebook entry related to the product.
+  - name: product_2_id
+    description: Identifier for the product.
+  - name: created_by_id
+    description: Identifier for the user who created the record.
+  - name: last_modified_by_id
+    description: Identifier for the user who last modified the record.
+  - name: name
+    description: Name of the opportunity product.
+  - name: description
+    description: Description of the opportunity product.
+  - name: service_date
+    description: Date when the service is scheduled.
+  - name: created_date
+    description: Timestamp when the record was created.
+  - name: last_modified_date
+    description: Timestamp when the record was last modified.
+  - name: system_modstamp
+    description: System modification timestamp.
+  - name: last_viewed_date
+    description: Timestamp when the record was last viewed.
+  - name: last_referenced_date
+    description: Timestamp when the record was last referenced.
+  - name: fivetran_synced
+    description: Timestamp when the record was last synced by Fivetran.
+  - name: sort_order
+    description: Order in which the product appears.
+  - name: product_code
+    description: Code representing the product.
+  - name: quantity_0
+    description: Quantity of the product in the first measurement.
+  - name: total_price
+    description: Total price for the opportunity product.
+  - name: unit_price
+    description: Price per unit of the product.
+  - name: list_price
+    description: Listed price of the product.
+  - name: is_deleted
+    description: Indicates if the record is marked as deleted.
+  - name: city
+    description: City associated with the opportunity product.
+  - name: quantity_1
+    description: Quantity of the product in the second measurement.
+  - name: portfolio_type
+    description: Type of portfolio associated with the product.
+  - name: fivetran_deleted
+    description: Indicates if the record is marked as deleted by Fivetran.

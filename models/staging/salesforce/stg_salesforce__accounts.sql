@@ -6,7 +6,7 @@ with
 
     snake_case_field_names_and_clean_timestamps as (
         -- Original command was using macro and then compiled output shown here for consistency and visibilty of SF Field Aliases
-        -- Original command was:  select {{ select_fields_structured('salesforce', 'account') }} from excluding_deleted_records
+        -- Original command was:   select {% raw %}{{ select_fields_structured('salesforce', 'account') }}{% endraw %} from excluding_deleted_records
         select
             "ID" as account_id,
             "MASTER_RECORD_ID" as master_record_id,

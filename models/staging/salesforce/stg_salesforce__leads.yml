@@ -7,6 +7,9 @@ models:
   columns:
   - name: lead_id
     description: Unique identifier for the lead.
+    data_tests:
+      - unique
+      - not_null
   - name: master_record_id
     description: Identifier for the master record associated with the lead.
   - name: record_type_id

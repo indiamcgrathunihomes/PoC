@@ -18,6 +18,7 @@ WITH active_customers AS (
         typ.record_type,
         NULL AS email,
         NULL AS stage,
+        DATE(date_won) AS source_date
     FROM
         {{ ref ('staging_salesforce_account')}} acc
         LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON acc.record_type_id = typ.id
@@ -45,7 +46,8 @@ active_opps AS (
         opp.competitor,
         typ.record_type,
         NULL AS email,
-        opp.stage_name AS stage
+        opp.stage_name AS stage,
+        DATE(opp.created_date) AS source_date
     FROM
         {{ ref ('staging_salesforce_opportunity')}} opp
         LEFT JOIN {{ ref ('staging_salesforce_account')}} acc ON opp.account_id = acc.id
@@ -88,7 +90,8 @@ valid_leads AS (
         lea.competitor,
         typ.record_type,
         lea.email,
-        NULL AS stage
+        NULL AS stage,
+        DATE(lea.created_date) AS source_date
     FROM
          {{ ref ('staging_salesforce_lead')}} lea
          LEFT JOIN {{ ref('staging_salesforce_record_types') }} typ ON lea.record_type_id = typ.id

@@ -6,7 +6,8 @@ SELECT
     account_id,
     stage_name,
     competitor_name_c AS competitor,
-    record_type_id
+    record_type_id,
+    created_date
 FROM 
     {{ source('salesforce', 'opportunity') }}
 WHERE

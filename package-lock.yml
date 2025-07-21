@@ -5,4 +5,13 @@ packages:
   - name: dbt_utils
     package: dbt-labs/dbt_utils
     version: 1.3.0
-sha1_hash: d9ee04a5344844fc2a229b02ea0f89b41c809080
+  - name: codegen
+    package: dbt-labs/codegen
+    version: 0.13.1
+  - name: audit_helper
+    package: dbt-labs/audit_helper
+    version: 0.12.1
+  - name: dbt_meta_testing
+    package: tnightengale/dbt_meta_testing
+    version: 0.3.6
+sha1_hash: 8f7f24202e72e1157709962a015447d7d46bc861

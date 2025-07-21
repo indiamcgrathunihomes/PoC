@@ -1,31 +1,432 @@
 models:
 - name: stg_salesforce__leads
-  description: This model processes and cleans Salesforce lead data, removing trailing
-    '_c' from field names and preparing it for further analysis or integration. It
-    provides a structured view of lead information, including company details, contact
-    information, and lead status.
+  description: This model processes Salesforce lead data by excluding deleted records
+    and converting field names to snake_case. It provides a comprehensive view of
+    lead information, including identifiers, contact details, timestamps, and various
+    lead attributes, facilitating analysis and reporting.
   columns:
-  - name: id
-    description: Unique identifier for each lead.
-  - name: name
-    description: Name of the lead.
-  - name: company
-    description: Company associated with the lead.
-  - name: associated_city
-    description: City associated with the lead.
-  - name: postal_code
-    description: Postcode of the lead's location.
-  - name: percentage_student
-    description: Total student portfolio of the lead
+  - name: lead_id
+    description: Unique identifier for the lead.
+  - name: master_record_id
+    description: Identifier for the master record associated with the lead.
   - name: record_type_id
     description: Identifier for the type of record.
-  - name: main_contact
-    description: Indicates if this is the main contact for the lead.
-  - name: status
-    description: Current status of the lead.
+  - name: owner_id
+    description: Identifier for the owner of the lead.
+  - name: converted_account_id
+    description: Identifier for the account to which the lead was converted.
+  - name: converted_contact_id
+    description: Identifier for the contact to which the lead was converted.
+  - name: converted_opportunity_id
+    description: Identifier for the opportunity to which the lead was converted.
+  - name: created_by_id
+    description: Identifier for the user who created the lead.
+  - name: last_modified_by_id
+    description: Identifier for the user who last modified the lead.
+  - name: jigsaw_contact_id
+    description: Identifier for the Jigsaw contact associated with the lead.
+  - name: individual_id
+    description: Identifier for the individual associated with the lead.
+  - name: activity_metric_id
+    description: Identifier for the activity metric related to the lead.
+  - name: activity_metric_rollup_id
+    description: Identifier for the rollup of activity metrics related to the lead.
+  - name: name
+    description: Name of the lead.
+  - name: industry
+    description: Industry associated with the lead.
+  - name: converted_date
+    description: Date when the lead was converted.
+  - name: created_date
+    description: Timestamp when the lead was created.
+  - name: last_modified_date
+    description: Timestamp when the lead was last modified.
+  - name: system_modstamp
+    description: System modification timestamp.
+  - name: last_activity_date
+    description: Date of the last activity related to the lead.
+  - name: last_viewed_date
+    description: Timestamp when the lead was last viewed.
+  - name: last_referenced_date
+    description: Timestamp when the lead was last referenced.
+  - name: email_bounced_date
+    description: Timestamp when the email to the lead bounced.
+  - name: last_text_sent
+    description: Timestamp when the last text was sent to the lead.
+  - name: date_of_last_enquiry
+    description: Date of the last enquiry made by the lead.
+  - name: date_of_birth
+    description: Date of birth of the lead.
+  - name: docu_sign_sent_date
+    description: Date when the DocuSign was sent to the lead.
+  - name: property_end_date
+    description: End date of the property associated with the lead.
+  - name: property_start_date
+    description: Start date of the property associated with the lead.
+  - name: date_of_interest
+    description: Date when the lead showed interest.
+  - name: last_property_email_sent
+    description: Timestamp when the last property email was sent to the lead.
+  - name: other_agent_tenancy_start_month
+    description: Start month of the tenancy with another agent.
+  - name: first_acquisition_date
+    description: Date of the first acquisition related to the lead.
+  - name: callback_date_time
+    description: Timestamp for the scheduled callback with the lead.
+  - name: callback_date
+    description: Date for the scheduled callback with the lead.
+  - name: company_registration_date
+    description: Date when the lead's company was registered.
+  - name: competitor_contract_end_date
+    description: End date of the competitor's contract.
+  - name: date_of_last_contact
+    description: Date of the last contact with the lead.
+  - name: date_of_re_approach
+    description: Date when the lead was re-approached.
+  - name: last_communication_date_time
+    description: Timestamp of the last communication with the lead.
+  - name: fivetran_synced
+    description: Timestamp when the lead data was last synced with Fivetran.
+  - name: is_deleted
+    description: Indicates if the lead record is deleted.
+  - name: last_name
+    description: Last name of the lead.
+  - name: first_name
+    description: First name of the lead.
+  - name: salutation
+    description: Salutation for the lead.
+  - name: title
+    description: Title of the lead.
+  - name: company
+    description: Company associated with the lead.
+  - name: street
+    description: Street address of the lead.
+  - name: city
+    description: City of the lead's address.
+  - name: state
+    description: State of the lead's address.
+  - name: postal_code
+    description: Postal code of the lead's address.
+  - name: country
+    description: Country of the lead's address.
+  - name: latitude
+    description: Latitude of the lead's location.
+  - name: longitude
+    description: Longitude of the lead's location.
+  - name: geocode_accuracy
+    description: Accuracy of the geocode for the lead's location.
   - name: phone
     description: Phone number of the lead.
-  - name: competitor
-    description: Name of the main competitor for the lead
+  - name: mobile_phone
+    description: Mobile phone number of the lead.
   - name: email
-    description: Current email address of the lead.
+    description: Email address of the lead.
+  - name: website
+    description: Website associated with the lead.
+  - name: photo_url
+    description: URL of the lead's photo.
+  - name: lead_source
+    description: Source from which the lead was acquired.
+  - name: status
+    description: Current status of the lead.
+  - name: number_of_employees
+    description: Number of employees in the lead's company.
+  - name: has_opted_out_of_email
+    description: Indicates if the lead has opted out of email communications.
+  - name: is_converted
+    description: Indicates if the lead has been converted.
+  - name: is_unread_by_owner
+    description: Indicates if the lead is unread by the owner.
+  - name: jigsaw
+    description: Jigsaw information related to the lead.
+  - name: email_bounced_reason
+    description: Reason for the email bounce.
+  - name: is_priority_record
+    description: Indicates if the lead is a priority record.
+  - name: landlord_agent
+    description: Landlord agent associated with the lead.
+  - name: group_size
+    description: Size of the group associated with the lead.
+  - name: emails_queued
+    description: Indicates if emails are queued for the lead.
+  - name: last_property_enquiry
+    description: Details of the last property enquiry made by the lead.
+  - name: blocker_reason
+    description: Reason for any blockers related to the lead.
+  - name: lost_reason
+    description: Reason why the lead was lost.
+  - name: database
+    description: Database information related to the lead.
+  - name: weekly_price
+    description: Weekly price associated with the lead.
+  - name: property_search_status
+    description: Status of the property search for the lead.
+  - name: docu_sign_sent
+    description: Indicates if a DocuSign was sent to the lead.
+  - name: archived_reason
+    description: Reason for archiving the lead.
+  - name: lead_contact
+    description: Indicates if the lead is a contact.
+  - name: property_signed_for
+    description: Property signed for by the lead.
+  - name: signed_all_inclusive
+    description: Indicates if the lead signed an all-inclusive agreement.
+  - name: docusign_recipient_status
+    description: Status of the DocuSign recipient.
+  - name: property_address
+    description: Address of the property associated with the lead.
+  - name: letting_agent
+    description: Letting agent associated with the lead.
+  - name: property_town
+    description: Town of the property associated with the lead.
+  - name: number_of_tenants
+    description: Number of tenants associated with the lead.
+  - name: send_3_rd_email_sms
+    description: Indicates if the third email/SMS was sent to the lead.
+  - name: send_4_th_email_sms
+    description: Indicates if the fourth email/SMS was sent to the lead.
+  - name: send_5_th_email_sms
+    description: Indicates if the fifth email/SMS was sent to the lead.
+  - name: send_initial_signup_sms
+    description: Indicates if the initial signup SMS was sent to the lead.
+  - name: send_signup_reminder_sms
+    description: Indicates if the signup reminder SMS was sent to the lead.
+  - name: customer_type
+    description: Type of customer the lead represents.
+  - name: internet_package
+    description: Internet package associated with the lead.
+  - name: property_signup_request_cancelled
+    description: Indicates if the property signup request was cancelled.
+  - name: property_signup_request_outstanding
+    description: Indicates if the property signup request is outstanding.
+  - name: send_1_st_email_sms
+    description: Indicates if the first email/SMS was sent to the lead.
+  - name: water
+    description: Indicates if water is included for the lead.
+  - name: tv_licence
+    description: Indicates if a TV licence is included for the lead.
+  - name: send_1_st_signup_reminder_sms
+    description: Indicates if the first signup reminder SMS was sent to the lead.
+  - name: send_2_nd_signup_reminder_sms
+    description: Indicates if the second signup reminder SMS was sent to the lead.
+  - name: gas
+    description: Indicates if gas is included for the lead.
+  - name: docusign_viewed
+    description: Indicates if the DocuSign was viewed by the lead.
+  - name: electricity
+    description: Indicates if electricity is included for the lead.
+  - name: et_4_ae_5_has_opted_out_of_mobile
+    description: Indicates if the lead has opted out of mobile communications.
+  - name: et_4_ae_5_mobile_country_code
+    description: Mobile country code for the lead.
+  - name: number_of_enquiries
+    description: Number of enquiries made by the lead.
+  - name: x_1_st_email
+    description: Indicates if the first email was sent to the lead.
+  - name: x_2_nd_email
+    description: Indicates if the second email was sent to the lead.
+  - name: x_1_st_call
+    description: Indicates if the first call was made to the lead.
+  - name: x_2_nd_call
+    description: Indicates if the second call was made to the lead.
+  - name: x_3_rd_email
+    description: Indicates if the third email was sent to the lead.
+  - name: x_3_rd_call
+    description: Indicates if the third call was made to the lead.
+  - name: interested_in_utilities
+    description: Indicates if the lead is interested in utilities.
+  - name: lost_provider
+    description: Provider lost by the lead.
+  - name: buying_stage
+    description: Stage of buying process for the lead.
+  - name: note
+    description: Notes related to the lead.
+  - name: energy_weekly_cost_pp
+    description: Weekly cost of energy per person for the lead.
+  - name: broadband_weekly_cost_pp
+    description: Weekly cost of broadband per person for the lead.
+  - name: non_discounted_weekly_price
+    description: Non-discounted weekly price for the lead.
+  - name: package_share_link
+    description: Link to share the package with the lead.
+  - name: tv_licence_weekly_cost_pp
+    description: Weekly cost of TV licence per person for the lead.
+  - name: water_weekly_cost_pp
+    description: Weekly cost of water per person for the lead.
+  - name: sales_incentive
+    description: Sales incentive offered to the lead.
+  - name: non_discounted_energy_weekly_cost_pp
+    description: Non-discounted weekly cost of energy per person for the lead.
+  - name: non_discounted_broadband_weekly_cost_pp
+    description: Non-discounted weekly cost of broadband per person for the lead.
+  - name: non_discounted_water_weekly_cost_pp
+    description: Non-discounted weekly cost of water per person for the lead.
+  - name: non_discounted_tv_licence_weekly_cost_pp
+    description: Non-discounted weekly cost of TV licence per person for the lead.
+  - name: chosen_enquiry
+    description: Enquiry chosen by the lead.
+  - name: no_hot_properties
+    description: Indicates if there are no hot properties for the lead.
+  - name: no_new_properties
+    description: Indicates if there are no new properties for the lead.
+  - name: landlord_agent_account
+    description: Account of the landlord agent associated with the lead.
+  - name: contact_link
+    description: Link to the contact associated with the lead.
+  - name: utility_order_form_account
+    description: Account for the utility order form related to the lead.
+  - name: property_count
+    description: Count of properties associated with the lead.
+  - name: campaign_source
+    description: Source of the campaign related to the lead.
+  - name: first_acquisition_campaign
+    description: Campaign of the first acquisition related to the lead.
+  - name: first_acquisition_source
+    description: Source of the first acquisition related to the lead.
+  - name: campaign_monitor_excluded_letting_agents
+    description: Indicates if letting agents are excluded from the campaign monitor.
+  - name: first_acquisition_medium
+    description: Medium of the first acquisition related to the lead.
+  - name: formatted_mobile_phone
+    description: Formatted mobile phone number of the lead.
+  - name: rerun_assignment
+    description: Indicates if the assignment was rerun for the lead.
+  - name: split_the_bills_mobile_opt_out
+    description: Indicates if the lead opted out of mobile communications for bill
+      splitting.
+  - name: verified_trust_pilot_link
+    description: Verified Trust Pilot link for the lead.
+  - name: lead_type
+    description: Type of lead.
+  - name: area_of_interest
+    description: Area of interest for the lead.
+  - name: associated_city
+    description: City associated with the lead.
+  - name: billing_model
+    description: Billing model for the lead.
+  - name: bills_included
+    description: Indicates if bills are included for the lead.
+  - name: blockers
+    description: Blockers related to the lead.
+  - name: callback_time
+    description: Time for the scheduled callback with the lead.
+  - name: company_status
+    description: Status of the lead's company.
+  - name: competitor_commission_per_tenant
+    description: Commission per tenant offered by a competitor.
+  - name: competitor_name
+    description: Name of the competitor.
+  - name: contact_type
+    description: Type of contact for the lead.
+  - name: count_of_calls_made_on_conversion
+    description: Count of calls made during the lead's conversion.
+  - name: count_of_closed_tasks_on_conversion
+    description: Count of closed tasks during the lead's conversion.
+  - name: count_of_emails_sent_on_conversion
+    description: Count of emails sent during the lead's conversion.
+  - name: count_of_open_tasks_on_conversion
+    description: Count of open tasks during the lead's conversion.
+  - name: force_activity_link
+    description: Link to force activity related to the lead.
+  - name: e_sign_tool_used
+    description: E-signature tool used for the lead.
+  - name: how_did_you_hear_about_us
+    description: How the lead heard about the company.
+  - name: letting_type
+    description: Type of letting associated with the lead.
+  - name: main_contact
+    description: Indicates if the lead is the main contact.
+  - name: office_email
+    description: Office email address of the lead.
+  - name: office_phone_number
+    description: Office phone number of the lead.
+  - name: partner_agent_referred_to
+    description: Partner agent to whom the lead was referred.
+  - name: portfolio_size
+    description: Size of the portfolio associated with the lead.
+  - name: previous_relationships
+    description: Previous relationships related to the lead.
+  - name: registered_company_name
+    description: Registered company name of the lead.
+  - name: registered_company_number
+    description: Registered company number of the lead.
+  - name: require_advertising
+    description: Indicates if advertising is required for the lead.
+  - name: unqualified_reason_other
+    description: Other reasons for the lead being unqualified.
+  - name: of_portfolio_let
+    description: Percentage of the portfolio let for the lead.
+  - name: disqualified_reason
+    description: Reason for disqualifying the lead.
+  - name: unqualified_reason
+    description: Reason for the lead being unqualified.
+  - name: listings
+    description: Listings associated with the lead.
+  - name: percentage_professional
+    description: Percentage of professionals associated with the lead.
+  - name: percentage_student
+    description: Percentage of students associated with the lead.
+  - name: tenancy_sign_up_process
+    description: Process for signing up for tenancy related to the lead.
+  - name: tenancy_software_tool_used
+    description: Software tool used for tenancy related to the lead.
+  - name: utility_form_sign_up_process
+    description: Process for signing up for utility forms related to the lead.
+  - name: voucher_code_used
+    description: Voucher code used by the lead.
+  - name: validated_authenticity
+    description: Indicates if the lead's authenticity is validated.
+  - name: drivers
+    description: Drivers related to the lead.
+  - name: temp_field
+    description: Temporary field related to the lead.
+  - name: registered_street
+    description: Registered street address of the lead.
+  - name: registered_city
+    description: Registered city of the lead.
+  - name: registered_region
+    description: Registered region of the lead.
+  - name: registered_country
+    description: Registered country of the lead.
+  - name: registered_postcode
+    description: Registered postcode of the lead.
+  - name: high_priority
+    description: Indicates if the lead is high priority.
+  - name: lead_score
+    description: Score assigned to the lead.
+  - name: reason_for_not_signing_bills_inclusive
+    description: Reason for not signing bills inclusive for the lead.
+  - name: other_details
+    description: Other details related to the lead.
+  - name: other_blocker_description
+    description: Description of other blockers related to the lead.
+  - name: btr_pbsa
+    description: BTR PBSA information related to the lead.
+  - name: fuel_included
+    description: Indicates if fuel is included for the lead.
+  - name: broadband_included
+    description: Indicates if broadband is included for the lead.
+  - name: tv_license_included
+    description: Indicates if a TV license is included for the lead.
+  - name: water_included
+    description: Indicates if water is included for the lead.
+  - name: marketing_source
+    description: Source of marketing related to the lead.
+  - name: marketing_qualified
+    description: Indicates if the lead is marketing qualified.
+  - name: primary_contact_flag
+    description: Indicates if the lead is the primary contact.
+  - name: email_deliverability
+    description: Deliverability status of the lead's email.
+  - name: email_validation
+    description: Validation status of the lead's email.
+  - name: email_validation_error_message
+    description: Error message for email validation.
+  - name: fivetran_deleted
+    description: Indicates if the lead record is deleted in Fivetran.
+  - name: recycled_contact
+    description: Indicates if the contact is recycled.
+  - name: recycled_account
+    description: Indicates if the account is recycled.
+  - name: parent_lead
+    description: Parent lead associated with the current lead.

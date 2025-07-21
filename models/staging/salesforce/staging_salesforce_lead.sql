@@ -12,7 +12,8 @@
         status,
         phone,
         competitor_name_c AS competitor,
-        email
+        email,
+        created_date
     FROM
         {{ source('salesforce', 'lead') }}
     WHERE

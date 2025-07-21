@@ -3,8 +3,8 @@
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OinMAE/view
 WITH active_customers AS (
     SELECT
-        acc.id AS salesforce_18_digit_id,
-        acc.id AS record_id,
+        acc.account_id AS salesforce_18_digit_id,
+        acc.account_id AS record_id,
         acc.name AS company,
         acc.name AS name,
         acc.associated_city,
@@ -31,7 +31,7 @@ WITH active_customers AS (
 active_opps AS (
 -- Rebuilding query for https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069QmDMAU/view
  SELECT
-        acc.id AS salesforce_18_digit_id,
+        acc.account_id AS salesforce_18_digit_id,
         opp.id AS record_id,
         acc.name AS company,
         acc.name AS name,
@@ -48,7 +48,7 @@ active_opps AS (
         opp.stage_name AS stage
     FROM
         {{ ref ('stg_salesforce__opportunities')}} opp
-        LEFT JOIN {{ ref ('stg_salesforce__accounts')}} acc ON opp.account_id = acc.id
+        LEFT JOIN {{ ref ('stg_salesforce__accounts')}} acc ON opp.account_id = acc.account_id
         LEFT JOIN
                     (
                         SELECT

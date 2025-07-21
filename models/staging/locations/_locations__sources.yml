@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: locations
+    database: pc_fivetran_db
+    schema: locations
+    description: This is a schema for postcode data for the United Kingdom.
+    tables:
+      - name: uk_postcodes

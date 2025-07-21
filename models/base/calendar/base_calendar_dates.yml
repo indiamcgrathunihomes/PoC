@@ -1,0 +1,13 @@
+models:
+- name: base_calendar_dates
+  description: This model provides a foundational view of calendar dates, including
+    various fiscal year categorizations, to support time-based analyses and reporting.
+  columns:
+  - name: date
+    description: The specific calendar date.
+  - name: lettings_year
+    description: The year associated with property lettings.
+  - name: tenancy_year
+    description: The year associated with tenancy agreements.
+  - name: financial_year
+    description: The fiscal year for financial reporting purposes.

@@ -1,39 +1,49 @@
 models:
 - name: base_student_marketshare_agent_list
-  description: This model consolidates data from Salesforce accounts, opportunities,
-    and leads to provide a comprehensive view of market share. It categorizes entities
-    as customers or prospects and identifies their associated city, postal code, and
-    student portfolio details.
+  description: This model consolidates data from Salesforce to provide a comprehensive
+    list of active customers, opportunities, and leads related to student market share.
+    It categorizes records into 'Customer' and 'Prospect' and includes details such
+    as company name, associated city, and total student portfolio. This model is useful
+    for analyzing market presence and identifying potential growth areas in the student
+    housing sector.
   columns:
   - name: salesforce_18_digit_id
+    description: A unique identifier for Salesforce records, used to track accounts,
+      opportunities, and leads.
+  - name: record_id
+    description: The unique identifier for each record, which can be an account, opportunity,
+      or lead.
     data_tests:
       - unique
       - not_null
-    description: A unique identifier for Salesforce records, ensuring each entity
-      is distinct.
   - name: company
-    description: The name of the company associated with the Salesforce record.
+    description: The name of the company associated with the record.
+  - name: name
+    description: The name of the individual or entity associated with the record.
   - name: associated_city
-    description: The city associated with the company or entity.
+    description: The city where the company or individual is located.
   - name: postcode
-    description: The postal code for the company's billing address.
-  - name: total_student_portfolio_c
-    description: The total student portfolio associated with the company, indicating
-      the number of students involved.
+    description: The postal code for the location of the company or individual.
+  - name: total_student_portfolio
+    description: The total number of student-related opportunities or accounts associated
+      with the record.
   - name: account_type
-    description: The type of account, specifying the nature of the business relationship.
+    description: The type of account, indicating whether it is a customer or prospect.
   - name: category
-    description: The classification of the entity as either a 'Customer' or 'Prospect'.
+    description: The classification of the record as either 'Customer' or 'Prospect'.
   - name: sf_object
-    description: The Salesforce object type, indicating whether the record is an 'Account',
-      'Opportunity', or 'Lead'.
+    description: The Salesforce object type, such as 'Account', 'Opportunity', or
+      'Lead'.
   - name: phone
-    description: The current phone number of the 'Lead' object record.
+    description: The contact phone number for the company or individual.
   - name: competitor
-    description: The current stated competitor of the 'Opportunity' or 'Lead' object record.
+    description: The name of a competitor associated with the opportunity or lead.
   - name: record_type
-    description: The associated record type of the salesforce object.
+    description: The type of record, providing additional context about the account,
+      opportunity, or lead.
   - name: email
-    description: The current email address of the 'Lead' object.
+    description: The contact email address for the company or individual.
   - name: stage
-    description: The stage field for the 'Opportunity' object records.
+    description: The current stage of the opportunity or lead in the sales process.
+  - name: source_date
+    description: The date when the record was created or the opportunity was won.

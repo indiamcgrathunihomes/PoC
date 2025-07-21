@@ -1,12 +1,28 @@
+select
+    regexp_substr(postcode, '[A-Z]+') as city_proxy,
+    sum(
+        case
+            when category = 'Customer'
+            then 1
+            when total_student_portfolio >= 5
+            then 1
+            else 0
+        end
+    ) as student_letting_agents,
+    sum(case when category = 'Customer' then 1 else 0 end) as clients,
+    sum(
+        case
+            when category = 'Customer'
+            then 1
+            when total_student_portfolio >= 5
+            then total_student_portfolio
+            else 0
+        end
+    ) as student_portfolio,
+    sum(
+        case when category = 'Customer' then total_student_portfolio else 0 end
+    ) as clients_student_portfolio
 
-
-SELECT
-REGEXP_SUBSTR(postcode,'[A-Z]+') AS city_proxy,
-SUM(CASE WHEN category = 'Customer' THEN 1 WHEN total_student_portfolio >=5 THEN 1 ELSE 0 END) AS Student_Letting_Agents,
-SUM(CASE WHEN category = 'Customer' THEN 1 ELSE 0 END) AS Clients,
-SUM(CASE WHEN category = 'Customer' THEN 1 WHEN total_student_portfolio >=5 THEN total_student_portfolio ELSE 0 END) AS Student_Portfolio,
-SUM(CASE WHEN category = 'Customer' THEN total_student_portfolio ELSE 0 END) AS Clients_Student_Portfolio
-
-FROM {{ ref ('base_student_marketshare_agent_list') }}
-GROUP BY 1
-ORDER BY student_portfolio DESC
+from {{ ref("base_student_marketshare_agent_list") }}
+group by 1
+order by student_portfolio desc

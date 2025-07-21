@@ -1,7 +1,7 @@
 select
-    date,
-    lettings_year,
-    tenancy_year,
-    financial_year
+    calendar_date,
+    calendar_lettings_year,
+    calendar_tenancy_year,
+    calendar_financial_year
 from
-    {{ ref('staging_calendar_dates') }}
+    {{ ref('stg_calendar__dates') }}

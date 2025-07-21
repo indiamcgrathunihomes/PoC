@@ -2,4 +2,4 @@ select
     postcode,
     latitude,
     longitude 
-from {{ ref("staging_locations_postcodes") }}
+from {{ ref("stg_locations__postcodes") }}

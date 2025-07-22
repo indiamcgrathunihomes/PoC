@@ -18,11 +18,14 @@ with
             typ.name as record_type,
             null as email,
             null as stage,
-            date(date_won) as source_date
+            ana.total_order_forms
         from {{ ref("stg_salesforce__accounts") }} acc
         left join
             {{ ref("stg_salesforce__record_types") }} typ
             on acc.record_type_id = typ.record_type_id
+        left join
+            {{ ref('stg_salesforce__analytics') }} ana
+            on acc.account_id = ana.landlord and ana.name = '2025-2026' -- Static filter for the current FY26
         where
             1 = 1
             and acc.record_type_id = '012360000009cYwAAI'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
@@ -48,8 +51,8 @@ with
             opp.competitor_name as competitor,
             typ.name as record_type,
             null as email,
-            opp.stage_name as stage,
-            date(opp.created_date) as source_date
+            null as stage,
+            0 as total_order_forms
         from {{ ref("stg_salesforce__opportunities") }} opp
         left join
             {{ ref("stg_salesforce__accounts") }} acc on opp.account_id = acc.account_id
@@ -100,7 +103,7 @@ with
             typ.name as record_type,
             lea.email,
             null as stage,
-            date(lea.created_date) as source_date
+            0 as total_order_forms
         from {{ ref("stg_salesforce__leads") }} lea
         left join
             {{ ref("stg_salesforce__record_types") }} typ
@@ -110,7 +113,12 @@ with
             and lea.record_type_id = '012Uc000000Gue9IAC'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
             and lea.main_contact = true
             and lea.status <> 'Converted'
-            and lea.status in ('Unqualified this Season', 'New', 'Working', 'Nurture')
+            and lea.status in (
+                    'Unqualified this Season', 
+                    'New', 
+                    'Working', 
+                    'Nurture'
+                )
 
     ),
 

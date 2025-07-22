@@ -83,7 +83,7 @@ with
             "UNIQUE_FEATURED_PROPERTIES_PURCHASED_C" as unique_featured_properties_purchased,
             "E_SIGN_C" as e_sign,
             "_FIVETRAN_DELETED" as fivetran_deleted
-        from pc_fivetran_db.salesforce.landlord_statistics_c
+        from {{ source("salesforce", "analytics") }}
     )
 
 select *

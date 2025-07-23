@@ -1,4 +1,23 @@
 models:
+  
+  # -----------------------------------------------
+  # BREAK: base_salesforce__accounts_enriched
+  # -----------------------------------------------
+  - name: base_salesforce__accounts_enriched
+    description: >
+      Enriched base model for Salesforce Account object.
+      Includes raw columns plus lookups for foreign keys that would otherwise only be IDs: record type, user names and parent accounts.
+    columns:
+      - name: id
+        description: Primary key from Salesforce Account
+        tests:
+          - not_null
+          - unique
+
+
+
+
+
   # -----------------------------------------------
   # BREAK: stg_salesforce__accounts
   # -----------------------------------------------

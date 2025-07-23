@@ -81,7 +81,6 @@ with
                 'Agreement Sent',
                 'Trial'
             )
-
     ),
 
     valid_leads as (

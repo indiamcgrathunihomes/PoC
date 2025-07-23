@@ -1,5 +1,6 @@
 models:
   - name: analytics_student_marketshare_city_summary
+    description: This is a simple model to aggregate city level statistics.
     columns:
       - name: city_proxy
       - name: student_letting_agents

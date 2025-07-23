@@ -31,4 +31,3 @@ sources:
       - name: record_types
         identifier: record_type
       - name: user
-        identifier: users

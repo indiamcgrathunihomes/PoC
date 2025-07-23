@@ -1,0 +1,43 @@
+version: 2
+
+macros:
+  - name: select_fields_structured
+    description: |
+      Automatically generates a well-formatted SELECT clause for all fields in a given model or source.
+      
+      This macro:
+        - Cleans up Salesforce-style column names by removing suffixes like `__c`, `__cs`, and `_c`
+        - Converts field names to snake_case and strips common prefixes (e.g., `sf_`, `custom_`)
+        - Casts `DATE` and `TIMESTAMP_*` fields into dbt-consistent types
+        - Renames `id` field to `{table_name}_id`
+        - Deduplicates column aliases if needed
+        - Categorizes and groups fields as: Identifiers, Foreign Keys, Descriptive fields, Dates, Measures, and Others
+        - Returns a formatted SELECT list with comments and spacing between sections
+
+      This is ideal for staging or base models where you want standardised, readable SELECT statements for large Salesforce/Fivetran tables.
+
+    arguments:
+      - name: model_or_source
+        type: relation | ref | source
+        description: >
+          A `ref()` or `source()` call that points to a dbt model or raw source. 
+          Required when used with a single argument. Example: `ref('stg_salesforce__account')`
+
+      - name: table_name
+        type: string (optional)
+        description: >
+          Only required when using a source. This should be the source table name and is used to determine suffix renaming (e.g. `id` becomes `account_id`). 
+          Example: `select_fields_structured('salesforce', 'account')`
+    
+    examples:
+      - |
+        -- From a ref'd model
+        select
+          {{ select_fields_structured(ref('stg_salesforce__account')) }}
+        from excluding_deleted_records
+
+      - |
+        -- From a source
+        select
+          {{ select_fields_structured('salesforce', 'account') }}
+        from excluding_deleted_records

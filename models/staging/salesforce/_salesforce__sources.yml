@@ -31,3 +31,5 @@ sources:
         identifier: opportunity_line_item
       - name: record_types
         identifier: record_type
+      - name: user
+        identifier: users

@@ -1,6 +1,6 @@
 with
 
-    source as (select * from {{ source("salesforce", "opportunity_products") }}),
+    source as (select * from {{ source("salesforce", "opportunity_product") }}),
 
     excluding_deleted_records as (select * from source where is_deleted = false),
 

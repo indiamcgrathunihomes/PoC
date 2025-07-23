@@ -1,6 +1,6 @@
 with
 
-    source as (select * from {{ source("salesforce", "record_types") }}),
+    source as (select * from {{ source("salesforce", "record_type") }}),
 
     -- We do not have the is_deleted field for this object so there is no CTE to
     -- filter out deleted records

@@ -1,16 +1,14 @@
-{% macro select_fields_structured(source_name, table_name) %}
-  {#
-    This macro pulls fields from a raw Salesforce object and:
-    - Removes suffixes (__c, __cs, _c)
-    - Converts to snake_case
-    - Casts DATE and TIMESTAMP types appropriately
-    - Deduplicates aliases safely
-    - Reorders fields by DBT convention:
-      Identifiers → Foreign Keys → Descriptive → Dates → Measures → Others
-    - Renames the `id` field to `{table_name}_id`
-  #}
+{% macro select_fields_structured(model_or_source, table_name=None) %}
+  {% if table_name is none %}
+    {# Called with ref() #}
+    {% set relation = model_or_source %}
+    {% set table_name = relation.identifier %}
+  {% else %}
+    {# Called with source() #}
+    {% set relation = source(model_or_source, table_name) %}
+  {% endif %}
 
-  {% set columns = adapter.get_columns_in_relation(source(source_name, table_name)) %}
+  {% set columns = adapter.get_columns_in_relation(relation) %}
   {% set known_prefixes = ['sf_', 'custom_', 'salesforce_'] %}
   {% set cleaned_names = [] %}
 
@@ -19,7 +17,6 @@
     {% set raw_name = col.name %}
     {% set lower_name = raw_name.lower() %}
 
-    {# Strip trailing suffixes: __cs, __c, _c #}
     {% if lower_name.endswith('__cs') %}
       {% set lower_name = lower_name[:-4] %}
     {% elif lower_name.endswith('__c') %}
@@ -28,14 +25,12 @@
       {% set lower_name = lower_name[:-2] %}
     {% endif %}
 
-    {# Strip prefixes #}
     {% for prefix in known_prefixes %}
       {% if lower_name.startswith(prefix) %}
         {% set lower_name = lower_name | replace(prefix, '') %}
       {% endif %}
     {% endfor %}
 
-    {# Convert to snake_case (safe approximation) #}
     {% set lower_name = lower_name
       | replace(' ', '_') | replace('-', '_') | replace('.', '_') | replace('/', '_') | replace('\\', '_')
       | replace('(', '') | replace(')', '') | replace('[', '') | replace(']', '')
@@ -49,7 +44,7 @@
     {% do cleaned_names.append(lower_name) %}
   {% endfor %}
 
-  {# === Step 2: Deduplicate aliases if needed === #}
+  {# === Step 2: Deduplicate aliases === #}
   {% set name_counts = {} %}
   {% for name in cleaned_names %}
     {% set count = name_counts.get(name, 0) %}
@@ -57,7 +52,6 @@
   {% endfor %}
 
   {% set running_counts = {} %}
-  {% set seen_aliases = [] %}
   {% set identifiers = [] %}
   {% set foreign_keys = [] %}
   {% set descriptive = [] %}
@@ -72,22 +66,17 @@
     {% set clean_name = cleaned_names[i] %}
     {% set alias = clean_name %}
 
-    {# Make alias unique if needed #}
     {% if name_counts[clean_name] > 1 %}
       {% set count = running_counts.get(clean_name, 0) %}
       {% set alias = clean_name ~ '_' ~ count %}
       {% do running_counts.update({clean_name: count + 1}) %}
     {% endif %}
 
-    {# Rename 'id' to {table_name}_id #}
     {% if alias == 'id' %}
       {% set alias = table_name ~ '_id' %}
     {% endif %}
 
-    {% do seen_aliases.append(alias) %}
     {% set data_type = col.data_type.upper() %}
-
-    {# Cast DATE and TIMESTAMP types #}
     {% if data_type == 'DATE' %}
       {% set line = 'cast(' ~ adapter.quote(raw_name) ~ ' as date) as ' ~ alias %}
     {% elif data_type in ['TIMESTAMP_NTZ', 'TIMESTAMP_TZ', 'TIMESTAMP_LTZ', 'DATETIME'] %}
@@ -96,7 +85,6 @@
       {% set line = adapter.quote(raw_name) ~ ' as ' ~ alias %}
     {% endif %}
 
-    {# Categorize by DBT best-practice order #}
     {% if alias == table_name ~ '_id' %}
       {% do identifiers.append(line) %}
     {% elif alias.endswith('_id') %}
@@ -112,12 +100,38 @@
     {% endif %}
   {% endfor %}
 
-  {{ return((
-      identifiers +
-      foreign_keys +
-      descriptive +
-      dates +
-      measures +
-      others
-    ) | join(',\n    ')) }}
+  {# === Step 4: Assemble with clear line breaks and comments === #}
+  {% set parts = [] %}
+
+  {% if identifiers %}
+    {% do parts.append('-- Identifiers') %}
+    {% do parts.append(identifiers | join(',\n    ')) %}
+  {% endif %}
+
+  {% if foreign_keys %}
+    {% do parts.append('\n-- Foreign Keys') %}
+    {% do parts.append(foreign_keys | join(',\n    ')) %}
+  {% endif %}
+
+  {% if descriptive %}
+    {% do parts.append('\n-- Descriptive') %}
+    {% do parts.append(descriptive | join(',\n    ')) %}
+  {% endif %}
+
+  {% if dates %}
+    {% do parts.append('\n-- Dates') %}
+    {% do parts.append(dates | join(',\n    ')) %}
+  {% endif %}
+
+  {% if measures %}
+    {% do parts.append('\n-- Measures') %}
+    {% do parts.append(measures | join(',\n    ')) %}
+  {% endif %}
+
+  {% if others %}
+    {% do parts.append('\n-- Other Fields') %}
+    {% do parts.append(others | join(',\n    ')) %}
+  {% endif %}
+
+  {{ return(parts | join(',\n\n    ')) }}
 {% endmacro %}

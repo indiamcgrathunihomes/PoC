@@ -26,7 +26,6 @@ sources:
         identifier: property_c
       - name: territory
         identifier: territory_c
-      - name: user
       - name: opportunity_products
         identifier: opportunity_line_item
       - name: record_types

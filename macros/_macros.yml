@@ -1,43 +1,86 @@
 version: 2
 
 macros:
+
   - name: select_fields_structured
     description: |
       Automatically generates a well-formatted SELECT clause for all fields in a given model or source.
-      
+
       This macro:
         - Cleans up Salesforce-style column names by removing suffixes like `__c`, `__cs`, and `_c`
-        - Converts field names to snake_case and strips common prefixes (e.g., `sf_`, `custom_`)
-        - Casts `DATE` and `TIMESTAMP_*` fields into dbt-consistent types
-        - Renames `id` field to `{table_name}_id`
-        - Deduplicates column aliases if needed
-        - Categorizes and groups fields as: Identifiers, Foreign Keys, Descriptive fields, Dates, Measures, and Others
-        - Returns a formatted SELECT list with comments and spacing between sections
+        - Converts field names to snake_case and strips known prefixes (e.g., `sf_`, `custom_`)
+        - Casts `DATE` and `TIMESTAMP_*` fields appropriately
+        - Renames the `id` field to `{table_name}_id`
+        - Deduplicates aliases when necessary
+        - Categorizes fields into: Identifiers, Foreign Keys, Descriptive, Dates, Measures, and Others
+        - Outputs a formatted SELECT list with helpful comments between field categories
 
-      This is ideal for staging or base models where you want standardised, readable SELECT statements for large Salesforce/Fivetran tables.
+      Useful in staging or base models to standardize messy raw tables (e.g., from Fivetran Salesforce syncs).
 
     arguments:
       - name: model_or_source
-        type: relation | ref | source
+        type: ref | source
         description: >
-          A `ref()` or `source()` call that points to a dbt model or raw source. 
-          Required when used with a single argument. Example: `ref('stg_salesforce__account')`
+          A `ref()` or `source()` call pointing to the model or source you're selecting from.
+          Required when using a single-argument call.
+          Example: `ref('stg_salesforce__account')`
 
       - name: table_name
         type: string (optional)
         description: >
-          Only required when using a source. This should be the source table name and is used to determine suffix renaming (e.g. `id` becomes `account_id`). 
+          Only required when using `source()`. Defines the table name for suffix cleanup and `id` renaming.
           Example: `select_fields_structured('salesforce', 'account')`
-    
+
     examples:
       - |
-        -- From a ref'd model
+        -- With ref()
         select
           {{ select_fields_structured(ref('stg_salesforce__account')) }}
-        from excluding_deleted_records
+        from {{ ref('stg_salesforce__account') }}
 
       - |
-        -- From a source
+        -- With source()
         select
           {{ select_fields_structured('salesforce', 'account') }}
-        from excluding_deleted_records
+        from {{ source('salesforce', 'account') }}
+
+  - name: generate_schema_name
+    description: |
+      Returns a custom schema name based on the environment.
+
+      This macro is useful when you want to dynamically generate schema names in dbt Cloud across environments.
+      It reads the `DBT_ENV` environment variable and uses it to prefix dev schemas while keeping production clean.
+
+      Behavior:
+        - If the model defines a `+schema`, then:
+          - In production (`DBT_ENV=prod`), use that schema directly
+          - In other environments, override it with the env name (e.g., `dev_india`)
+        - If `+schema` is not set, fallback to the environment name or `target.schema`
+
+    arguments:
+      - name: custom_schema_name
+        type: string | none
+        description: >
+          The schema name passed via `+schema:` config. May be overridden in dev environments.
+
+      - name: node
+        type: object
+        description: >
+          The dbt node object, required to comply with dbt's `generate_schema_name` macro signature.
+
+    examples:
+      - |
+        -- In dbt_project.yml
+        models:
+          my_project:
+            +generate_schema_name: my_macros.generate_schema_name
+
+      - |
+        -- In dbt Cloud 'dev' environment
+        DBT_ENV=dev_india
+        -- Model with +schema: analytics → gets built in schema: `dev_india`
+
+      - |
+        -- In dbt Cloud 'prod' environment
+        DBT_ENV=prod
+        -- Model with +schema: analytics → stays in schema: `analytics`

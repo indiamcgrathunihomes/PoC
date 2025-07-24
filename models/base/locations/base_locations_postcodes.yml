@@ -1,0 +1,6 @@
+models:
+- name: base_locations_postcodes
+  description: This model serves as a foundational layer for location and postcode
+    data, pulling all columns from the staging_locations_postcodes model. It is used
+    to provide a comprehensive dataset of location and postcode information for further
+    analysis and reporting.

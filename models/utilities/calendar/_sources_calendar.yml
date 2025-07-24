@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: calendar
+    database: pc_fivetran_db
+    schema: calendar
+    description: This is a schema containing dates and key periods.
+    tables:
+      - name: dates

@@ -35,6 +35,21 @@ models:
 
 
   # -----------------------------------------------
+  # BREAK: base_salesforce__leads_with_foreign_key_names
+  # -----------------------------------------------
+  - name: base_salesforce__leads_with_foreign_key_names
+    description: This model enriches Salesforce lead data by joining it with related
+      records such as master leads, record types, users, accounts, and opportunities.
+      It provides a comprehensive view of leads with additional context from related
+      entities, facilitating better analysis and reporting.
+    columns:
+    - name: id
+      description: Primary key from Salesforce Lead
+      tests:
+        - not_null
+        - unique
+
+  # -----------------------------------------------
   # BREAK: stg_salesforce__accounts
   # -----------------------------------------------
   - name: stg_salesforce__accounts

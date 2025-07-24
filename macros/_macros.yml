@@ -1,7 +1,6 @@
 version: 2
 
 macros:
-
   - name: select_fields_structured
     description: |
       Automatically generates a well-formatted SELECT clause for all fields in a given model or source.
@@ -35,14 +34,14 @@ macros:
       - |
         -- With ref()
         select
-          {{ select_fields_structured(ref('stg_salesforce__account')) }}
-        from {{ ref('stg_salesforce__account') }}
+          {{ '{{ select_fields_structured(ref("stg_salesforce__account")) }}' }}
+        from {{ '{{ ref("stg_salesforce__account") }}' }}
 
       - |
         -- With source()
         select
-          {{ select_fields_structured('salesforce', 'account') }}
-        from {{ source('salesforce', 'account') }}
+          {{ '{{ select_fields_structured("salesforce", "account") }}' }}
+        from {{ '{{ source("salesforce", "account") }}' }}
 
   - name: generate_schema_name
     description: |

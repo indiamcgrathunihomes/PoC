@@ -1,6 +1,6 @@
 with
 
-    enriched_accounts as (select * from {{ ref ("base_salesforce__accounts_enriched") }} ), 
+    enriched_accounts as (select * from {{ ref ("base_salesforce__accounts_with_foreign_key_names") }} ), 
 
     excluding_deleted_records as (select * from enriched_accounts where is_deleted = false),
 

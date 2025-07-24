@@ -1,10 +1,10 @@
 models:
   # -----------------------------------------------
-  # BREAK: base_salesforce__accounts_enriched
+  # BREAK: base_salesforce__accounts_with_foreign_key_names
   # -----------------------------------------------
-  - name: base_salesforce__accounts_enriched
+  - name: base_salesforce__accounts_with_foreign_key_names
     description: >
-      Enriched base model for Salesforce Account object.
+      Base model for Salesforce Account object with names for Foreign Key IDs.
       Includes raw columns plus lookups for foreign keys that would otherwise only be IDs: record type, user names and parent accounts.
     columns:
       - name: id

@@ -5,6 +5,8 @@ macros:
     description: |
       Automatically generates a well-formatted SELECT clause for all fields in a given model or source.
 
+      NOTE: To use this macro with 'ref' the 'ref' must be materialized as a table or view - so be sure to build it first!
+
       This macro:
         - Cleans up Salesforce-style column names by removing suffixes like `__c`, `__cs`, and `_c`
         - Converts field names to snake_case and strips known prefixes (e.g., `sf_`, `custom_`)

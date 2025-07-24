@@ -1,5 +1,4 @@
 models:
-  
   # -----------------------------------------------
   # BREAK: base_salesforce__accounts_enriched
   # -----------------------------------------------
@@ -13,10 +12,6 @@ models:
         tests:
           - not_null
           - unique
-
-
-
-
 
   # -----------------------------------------------
   # BREAK: stg_salesforce__accounts
@@ -1768,3 +1763,164 @@ models:
         description: Indicates whether the record type is active.
       - name: fivetran_deleted
         description: Indicates whether the record type has been deleted in Fivetran.
+
+  # -----------------------------------------------
+  # BREAK: stg_salesforce__analytics
+  # -----------------------------------------------
+  - name: stg_salesforce__analytics
+    description:
+      This model processes Salesforce analytics data by excluding deleted
+      records and converting field names to snake_case. It provides a comprehensive
+      view of analytics data, including timestamps, enquiry and order metrics, leads,
+      and property statistics, which are essential for sales and marketing analysis.
+    columns:
+      - name: analytics_id
+        description: Unique identifier for each analytics record.
+      - name: created_by_id
+        description: Identifier of the user who created the record.
+      - name: last_modified_by_id
+        description: Identifier of the user who last modified the record.
+      - name: name
+        description: Name of the analytics record.
+      - name: created_date
+        description: Timestamp when the record was created.
+      - name: last_modified_date
+        description: Timestamp when the record was last modified.
+      - name: system_modstamp
+        description: System modification timestamp.
+      - name: last_viewed_date
+        description: Timestamp when the record was last viewed.
+      - name: last_referenced_date
+        description: Timestamp when the record was last referenced.
+      - name: live_property_check
+        description: Timestamp for the live property check.
+      - name: fivetran_synced
+        description: Timestamp when the record was last synced by Fivetran.
+      - name: is_deleted
+        description: Indicates if the record is deleted.
+      - name: landlord
+        description: Landlord information associated with the record.
+      - name: cross_sell
+        description: Cross-sell opportunities related to the record.
+      - name: enquiry_apr
+        description: Number of enquiries in April.
+      - name: enquiry_aug
+        description: Number of enquiries in August.
+      - name: enquiry_dec
+        description: Number of enquiries in December.
+      - name: enquiry_feb
+        description: Number of enquiries in February.
+      - name: enquiry_jan
+        description: Number of enquiries in January.
+      - name: enquiry_jul
+        description: Number of enquiries in July.
+      - name: enquiry_jun
+        description: Number of enquiries in June.
+      - name: enquiry_mar
+        description: Number of enquiries in March.
+      - name: enquiry_may
+        description: Number of enquiries in May.
+      - name: enquiry_nov
+        description: Number of enquiries in November.
+      - name: enquiry_oct
+        description: Number of enquiries in October.
+      - name: enquiry_sept
+        description: Number of enquiries in September.
+      - name: order_apr
+        description: Number of orders in April.
+      - name: order_aug
+        description: Number of orders in August.
+      - name: order_dec
+        description: Number of orders in December.
+      - name: order_feb
+        description: Number of orders in February.
+      - name: order_jan
+        description: Number of orders in January.
+      - name: order_jul
+        description: Number of orders in July.
+      - name: order_jun
+        description: Number of orders in June.
+      - name: order_mar
+        description: Number of orders in March.
+      - name: order_may
+        description: Number of orders in May.
+      - name: order_nov
+        description: Number of orders in November.
+      - name: order_oct
+        description: Number of orders in October.
+      - name: order_sept
+        description: Number of orders in September.
+      - name: re_sign
+        description: Indicates if the contract was re-signed.
+      - name: referral_commission
+        description: Commission earned from referrals.
+      - name: total_enquiries
+        description: Total number of enquiries.
+      - name: total_order_forms
+        description: Total number of order forms.
+      - name: uni_homes
+        description: Information about university homes.
+      - name: year
+        description: Year associated with the record.
+      - name: agent_billing
+        description: Billing information for agents.
+      - name: commission_deduction
+        description: Deductions made from commission.
+      - name: target_this_season
+        description: Target metrics for the current season.
+      - name: live_properties_on_website
+        description: Number of live properties listed on the website.
+      - name: average_contract_length
+        description: Average length of contracts.
+      - name: cancellations
+        description: Number of cancellations.
+      - name: group_size_mean_average
+        description: Mean average of group sizes.
+      - name: group_size_mode_average
+        description: Mode average of group sizes.
+      - name: total_order_form_with_cancellation
+        description: Total order forms that included a cancellation.
+      - name: leads_apr
+        description: Number of leads in April.
+      - name: leads_aug
+        description: Number of leads in August.
+      - name: leads_dec
+        description: Number of leads in December.
+      - name: leads_feb
+        description: Number of leads in February.
+      - name: leads_jan
+        description: Number of leads in January.
+      - name: leads_jul
+        description: Number of leads in July.
+      - name: leads_jun
+        description: Number of leads in June.
+      - name: leads_mar
+        description: Number of leads in March.
+      - name: leads_may
+        description: Number of leads in May.
+      - name: leads_nov
+        description: Number of leads in November.
+      - name: leads_oct
+        description: Number of leads in October.
+      - name: leads_sep
+        description: Number of leads in September.
+      - name: total_leads
+        description: Total number of leads.
+      - name: current_live_properties
+        description: Current number of live properties.
+      - name: year_rank
+        description: Rank of the year based on performance metrics.
+      - name: live_properties_in_season
+        description: Number of live properties during the season.
+      - name: letting_season_spend_on_boosts
+        description: Expenditure on boosts during the letting season.
+      - name: letting_season_spend_on_featured_propert
+        description: Expenditure on featured properties during the letting season.
+      - name: unique_boosts_purchased
+        description: Number of unique boosts purchased.
+      - name: unique_featured_properties_purchased
+        description: Number of unique featured properties purchased.
+      - name: e_sign
+        description: Indicates if the contract was signed electronically.
+      - name: fivetran_deleted
+        description: Indicates if the record was deleted by Fivetran.

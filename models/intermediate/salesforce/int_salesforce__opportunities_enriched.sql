@@ -18,8 +18,8 @@ opportunity_portfolio_aggregation as (
         opportunity_id,
 
         -- Portfolio size for each type
-        sum(case when lower(portfolio_type) = 'student' then quantity_0 else 0 end) as student_portfolio_size,
-        sum(case when lower(portfolio_type) = 'sharer' then quantity_0 else 0 end) as sharer_portfolio_size,
+        sum(case when lower(portfolio_type) = 'student' then quantity_0 else 0 end) as total_student_portfolio,
+        sum(case when lower(portfolio_type) = 'sharer' then quantity_0 else 0 end) as total_sharer_portfolio,
 
         -- Total portfolio size (across all types)
         sum(quantity_0) as total_portfolio_size
@@ -49,7 +49,12 @@ accounts as (
         last_activity_date as account_last_activity_date,
         created_date as account_created_date,
         last_modified_date as account_last_modified_date,
-        description as account_description
+        description as account_description,
+        associated_city as account_associated_city,
+        billing_postal_code as account_billing_postal_code,
+        date_closed as account_date_closed,
+        date_won as account_date_won
+
     from {{ ref('stg_salesforce__accounts') }}
 ),
 
@@ -59,8 +64,8 @@ joined as (
         opp.*,
 
         -- Portfolio info
-        opa.student_portfolio_size,
-        opa.sharer_portfolio_size,
+        opa.total_student_portfolio,
+        opa.total_sharer_portfolio,
         opa.total_portfolio_size,
 
         -- Account info (exclude duplicate account_id)
@@ -81,7 +86,11 @@ joined as (
         acc.account_last_activity_date,
         acc.account_created_date,
         acc.account_last_modified_date,
-        acc.account_description
+        acc.account_description,
+        acc.account_associated_city,
+        acc.account_billing_postal_code,
+        acc.account_date_closed,
+        acc.account_date_won
 
     from opportunities opp
     left join opportunity_portfolio_aggregation opa

@@ -46,7 +46,7 @@ with
             'Opportunity' as sf_object,
             null as phone,
             opp.competitor_name as competitor,
-            typ.name as record_type,
+            opp.record_type_name as record_type,
             null as email,
             null as stage,
             0 as total_order_forms
@@ -61,9 +61,6 @@ with
                 group by opportunity_id
             ) qty
             on qty.opportunity_id = opp.opportunity_id
-        left join
-            {{ ref("stg_salesforce__record_types") }} typ
-            on opp.record_type_id = typ.record_type_id
         where
             1 = 1
             and acc.record_type_name = 'Landlord/Agent'
@@ -84,32 +81,30 @@ with
         -- Rebuilding query for
         -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OyvMAE/view
         select
-            lea.lead_id as salesforce_18_digit_id,
-            lea.lead_id as record_id,
-            lea.company,
-            lea.name as name,
-            lea.associated_city,
-            lea.postal_code as postcode,
-            lea.percentage_student as total_student_portfolio,
+            lead_id as salesforce_18_digit_id,
+            lead_id as record_id,
+            company,
+            name as name,
+            associated_city,
+            postal_code as postcode,
+            percentage_student as total_student_portfolio,
             null as account_type,
             'Prospect' as category,
             'Lead' as sf_object,
-            lea.phone,
-            lea.competitor_name as competitor,
-            typ.name as record_type,
-            lea.email,
+            phone,
+            competitor_name as competitor,
+            record_type_name as record_type,
+            email,
             null as stage,
             0 as total_order_forms
-        from {{ ref("stg_salesforce__leads") }} lea
-        left join
-            {{ ref("stg_salesforce__record_types") }} typ
-            on lea.record_type_id = typ.record_type_id
+        from {{ ref("stg_salesforce__leads") }} 
+        
         where
             1 = 1
-            and lea.record_type_id = '012Uc000000Gue9IAC'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
-            and lea.main_contact = true
-            and lea.status <> 'Converted'
-            and lea.status in (
+            and record_type_name = 'Letting Agent/Landlord' 
+            and main_contact = true
+            and status <> 'Converted'
+            and status in (
                     'Unqualified this Season', 
                     'New', 
                     'Working', 

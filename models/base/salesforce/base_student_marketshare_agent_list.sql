@@ -15,20 +15,17 @@ with
             'Account' as sf_object,
             null as phone,
             null as competitor,
-            typ.name as record_type,
+            acc.record_type_name,
             null as email,
             null as stage,
             ana.total_order_forms
         from {{ ref("stg_salesforce__accounts") }} acc
         left join
-            {{ ref("stg_salesforce__record_types") }} typ
-            on acc.record_type_id = typ.record_type_id
-        left join
             {{ ref('stg_salesforce__analytics') }} ana
             on acc.account_id = ana.landlord and ana.name = '2025-2026' -- Static filter for the current FY26
         where
             1 = 1
-            and acc.record_type_id = '012360000009cYwAAI'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent 
+            and acc.record_type_name = 'Landlord/Agent' 
             and acc.date_closed is null
             and acc.date_won is not null
     ),
@@ -69,7 +66,7 @@ with
             on opp.record_type_id = typ.record_type_id
         where
             1 = 1
-            and acc.record_type_id = '012360000009cYwAAI'  -- Need to pull in Record Type object to do this dynamically. Filters for Landlord/Agent
+            and acc.record_type_name = 'Landlord/Agent'
             and acc.date_closed is null
             and acc.date_won is null
             and opp.stage_name in (

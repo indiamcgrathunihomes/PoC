@@ -30,3 +30,5 @@ sources:
         identifier: opportunity_line_item
       - name: record_type
       - name: user
+      - name: analytics
+        identifier: landlord_statistics_c

@@ -38,3 +38,6 @@
     {% do log("✅ No differences found in compare_all_columns.", info=True) %}
   {% endif %}
 {% endif %}
+
+-- Also return results as a queryable table if needed
+{{ diff_sql }}

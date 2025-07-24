@@ -15,7 +15,7 @@ with
             'Account' as sf_object,
             null as phone,
             null as competitor,
-            acc.record_type_name,
+            acc.record_type_name as record_type,
             null as email,
             null as stage,
             ana.total_order_forms

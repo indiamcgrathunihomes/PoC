@@ -1,22 +1,37 @@
 with
 
--- Base opportunity records
+-- Staging opportunity records
 opportunities as (
     select *
     from {{ ref('stg_salesforce__opportunities') }}
 ),
 
--- Aggregated portfolio info from opportunity products
-opportunity_products_aggregated_to_opportunity as (
+-- Staging opportunity products
+opportunity_products as (
     select *
-    from {{ ref('int_salesforce__opportunity_products_aggregated_to_opportunity') }}
+    from {{ ref('stg_salesforce__opportunity_products') }}
 ),
 
--- Accounts
+-- Aggregated portfolio info (inlined logic)
+opportunity_portfolio_aggregation as (
+    select
+        opportunity_id,
+
+        -- Portfolio size for each type
+        sum(case when lower(portfolio_type) = 'student' then quantity_0 else 0 end) as student_portfolio_size,
+        sum(case when lower(portfolio_type) = 'sharer' then quantity_0 else 0 end) as sharer_portfolio_size,
+
+        -- Total portfolio size (across all types)
+        sum(quantity_0) as total_portfolio_size
+
+    from opportunity_products
+    group by opportunity_id
+),
+
+-- Staging Account Info
 accounts as (
     select
         account_id,
-        name as account_name,
         owner_id as account_owner_id,
         parent_id as parent_account_id,
         landlord_agent_name,
@@ -48,11 +63,28 @@ joined as (
         opa.sharer_portfolio_size,
         opa.total_portfolio_size,
 
-        -- Account info
-        acc.*
+        -- Account info (exclude duplicate account_id)
+        acc.account_owner_id,
+        acc.parent_account_id,
+        acc.landlord_agent_name,
+        acc.annual_revenue,
+        acc.account_type,
+        acc.account_record_type_name,
+        acc.account_site,
+        acc.industry,
+        acc.rating,
+        acc.sic,
+        acc.ticker_symbol,
+        acc.number_of_employees,
+        acc.ownership,
+        acc.account_number,
+        acc.account_last_activity_date,
+        acc.account_created_date,
+        acc.account_last_modified_date,
+        acc.account_description
 
     from opportunities opp
-    left join opportunity_products_aggregated_to_opportunity opa
+    left join opportunity_portfolio_aggregation opa
         on opp.opportunity_id = opa.opportunity_id
 
     left join accounts acc

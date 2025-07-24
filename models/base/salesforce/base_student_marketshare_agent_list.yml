@@ -45,5 +45,5 @@ models:
     description: The contact email address for the company or individual.
   - name: stage
     description: The current stage of the opportunity or lead in the sales process.
-  - name: source_date
-    description: The date when the record was created or the opportunity was won.
+  - name: total_order_forms
+    description: The number of order forms from the analytics object in Salesforce, this is currently hard-coded to the current financial year.

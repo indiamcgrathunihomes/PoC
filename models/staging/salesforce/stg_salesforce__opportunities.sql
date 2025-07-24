@@ -1,14 +1,21 @@
 with
 
-    source as (select * from {{ source("salesforce", "opportunity") }}),
+    base_records as (select * from {{ ref ("base_salesforce__opportunities_with_foreign_key_names") }} ), 
 
-    excluding_deleted_records as (select * from source where is_deleted = false),
+    excluding_deleted_records as (select * from base_records where is_deleted = false),
 
     snake_case_field_names_and_clean_timestamps as (
         -- Original command was using macro and then compiled output shown here for consistency and visibilty of SF Field Aliases
-        -- Original command was:   select {% raw %}{{ select_fields_structured('salesforce', 'opportunity') }}{% endraw %} from excluding_deleted_records
+        -- Original command was:   select {% raw %}{{ select_fields_structured(ref('base_salesforce__opportunities_with_foreign_key_names')) }}{% endraw %} from excluding_deleted_records
+       
+          
+   select -- Identifiers,
+
+    "ID" as base_salesforce__opportunities_with_foreign_key_names_id,
+
     
-    select "ID" as opportunity_id,
+-- Foreign Keys,
+
     "ACCOUNT_ID" as account_id,
     "RECORD_TYPE_ID" as record_type_id,
     "CAMPAIGN_ID" as campaign_id,
@@ -22,9 +29,17 @@ with
     "LAST_CLOSE_DATE_CHANGED_HISTORY_ID" as last_close_date_changed_history_id,
     "ACTIVITY_METRIC_ID" as activity_metric_id,
     "ACTIVITY_METRIC_ROLLUP_ID" as activity_metric_rollup_id,
+
+    
+-- Descriptive,
+
     "NAME" as name,
     "DESCRIPTION" as description,
     "TYPE" as type,
+
+    
+-- Dates,
+
     cast("CLOSE_DATE" as date) as close_date,
     cast("CREATED_DATE" as timestamp) as created_date,
     cast("LAST_MODIFIED_DATE" as timestamp) as last_modified_date,
@@ -43,7 +58,15 @@ with
     cast("VOIDED_DATE_C" as date) as voided_date,
     cast("CALLBACK_DATE_TIME_C" as timestamp) as callback_date_time,
     cast("_FIVETRAN_SYNCED" as timestamp) as fivetran_synced,
+
+    
+-- Measures,
+
     "AMOUNT" as amount,
+
+    
+-- Other Fields,
+
     "IS_DELETED" as is_deleted,
     "STAGE_NAME" as stage_name,
     "PROBABILITY" as probability,
@@ -124,7 +147,14 @@ with
     "ENQUIRY_TO_FORM_SEND_TIMEFRAME_DAYS_C" as enquiry_to_form_send_timeframe_days,
     "_FIVETRAN_DELETED" as fivetran_deleted,
     "CREATE_RENEWAL_C" as create_renewal,
-    "RECYCLED_MAIN_LEAD_C" as recycled_main_lead from excluding_deleted_records
+    "RECYCLED_MAIN_LEAD_C" as recycled_main_lead,
+    "ACCOUNT_NAME" as account_name,
+    "RECORD_TYPE_NAME" as record_type_name,
+    "OWNER_NAME" as owner_name,
+    "CREATED_BY_NAME" as created_by_name,
+    "LAST_MODIFIED_BY_NAME" as last_modified_by_name
+    from excluding_deleted_records
+
     )
 
 select *

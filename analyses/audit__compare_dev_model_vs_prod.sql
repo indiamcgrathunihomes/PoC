@@ -40,4 +40,11 @@
 {% endif %}
 
 -- Also return results as a queryable table if needed
-{{ diff_sql }}
+{% set rendered_query %}
+  {{ diff_sql }}
+{% endset %}
+
+-- You can even copy-paste this to log it or use it in another query
+{{ log(rendered_query, info=True) }}
+
+{{ rendered_query }}

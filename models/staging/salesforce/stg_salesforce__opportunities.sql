@@ -11,7 +11,7 @@ with
           
    select -- Identifiers,
 
-    "ID" as base_salesforce__opportunities_with_foreign_key_names_id,
+    "ID" as opportunity_id, -- Automatically macro produces different name based on ref. Corrected here.
 
     
 -- Foreign Keys,

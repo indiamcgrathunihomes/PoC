@@ -13,6 +13,20 @@
 
 WITH
 
+account_details AS (
+    SELECT
+        account_id,
+        name AS account_name,
+        record_type_name,
+        associated_city,
+        billing_postal_code,
+        total_student_portfolio,
+        account_type,
+        date_closed,
+        date_won
+    FROM {{ ref('stg_salesforce__accounts') }}
+),
+
 {% for year in years %}
 analytics_{{ year | replace('-', '_') }} AS (
     SELECT
@@ -51,5 +65,16 @@ pivoted AS (
     {% endfor %}
 )
 
-SELECT *
-FROM pivoted
+SELECT
+    p.*,
+    a.account_name,
+    a.record_type_name,
+    a.associated_city,
+    a.billing_postal_code,
+    a.total_student_portfolio,
+    a.account_type,
+    a.date_closed,
+    a.date_won
+FROM pivoted p
+LEFT JOIN account_details a
+    ON p.account_id = a.account_id

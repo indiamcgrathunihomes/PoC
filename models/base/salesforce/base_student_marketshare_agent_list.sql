@@ -54,7 +54,7 @@ with
         
         where
             1 = 1
-            and record_type_name = 'Landlord/Agent'
+            and account_record_type_name = 'Landlord/Agent'
             and account_date_closed is null
             and account_date_won is null
             and stage_name in (

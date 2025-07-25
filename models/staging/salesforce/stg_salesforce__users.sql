@@ -7,9 +7,7 @@ source as (select * from {{ source("salesforce", "user") }}),
 snake_case_field_names_and_clean_timestamps as (
     -- Original command was using macro and then compiled output shown here for
     -- consistency and visibilty of SF Field Aliases
-    {% raw %}{{
-    -- select_fields_structured('salesforce', 'user') }} from source
-    {% endraw %}
+    -- Was originally select {% raw %}{{select_fields_structured('salesforce', 'user') }} from source {% endraw %}
 
     select
         "ID" as user_id,

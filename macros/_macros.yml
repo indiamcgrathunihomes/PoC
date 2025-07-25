@@ -1,6 +1,9 @@
 version: 2
 
 macros:
+  # -----------------------------------------------
+  # BREAK: select_fields_structured
+  # -----------------------------------------------
   - name: select_fields_structured
     description: |
       Automatically generates a well-formatted SELECT clause for all fields in a given model or source.
@@ -45,6 +48,11 @@ macros:
           {{ '{{ select_fields_structured("salesforce", "account") }}' }}
         from {{ '{{ source("salesforce", "account") }}' }}
 
+
+
+  # -----------------------------------------------
+  # BREAK: generate_schema_name
+  # -----------------------------------------------
   - name: generate_schema_name
     description: |
       Returns a custom schema name based on the environment.

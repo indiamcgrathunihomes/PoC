@@ -1,0 +1,418 @@
+models:
+  # -----------------------------------------------
+  # BREAK:int_salesforce__agent_accounts_with_analytics
+  # -----------------------------------------------
+- name: int_salesforce__agent_accounts_with_analytics
+  description: This model integrates Salesforce agent account data with analytics
+    metrics over multiple years. It provides a comprehensive view of agent performance
+    and activities, including order forms, leads, enquiries, and property metrics,
+    segmented by year. This model is useful for tracking and analyzing agent performance
+    trends over time.
+  columns:
+  - name: account_id
+    data_tests:
+      - unique
+      - not_null
+    description: Unique identifier for the agent account.
+  - name: account_name
+    description: Name of the agent account.
+  - name: record_type_name
+    description: Type of record, specifically 'Landlord/Agent'.
+  - name: associated_city
+    description: City associated with the agent account.
+  - name: billing_postal_code
+    description: Postal code for billing purposes.
+  - name: date_closed
+    description: Date when the account was closed.
+  - name: date_won
+    description: Date when the account was won.
+  - name: total_student_portfolio
+    description: Total number of student properties in the agent's portfolio.
+  - name: account_type
+    description: Type of account, such as individual or company.
+  - name: total_order_forms_2021_2022
+    description: Total number of order forms for the 2021-2022 period.
+  - name: target_this_season_2021_2022
+    description: Target metrics for the 2021-2022 season.
+  - name: live_properties_in_season_2021_2022
+    description: Number of properties live during the 2021-2022 season.
+  - name: current_live_properties_2021_2022
+    description: Current number of live properties for the 2021-2022 period.
+  - name: total_leads_2021_2022
+    description: Total number of leads generated in the 2021-2022 period.
+  - name: total_enquiries_2021_2022
+    description: Total number of enquiries received in the 2021-2022 period.
+  - name: unique_featured_properties_purchased_2021_2022
+    description: Number of unique featured properties purchased in the 2021-2022 period.
+  - name: total_order_forms_2022_2023
+    description: Total number of order forms for the 2022-2023 period.
+  - name: target_this_season_2022_2023
+    description: Target metrics for the 2022-2023 season.
+  - name: live_properties_in_season_2022_2023
+    description: Number of properties live during the 2022-2023 season.
+  - name: current_live_properties_2022_2023
+    description: Current number of live properties for the 2022-2023 period.
+  - name: total_leads_2022_2023
+    description: Total number of leads generated in the 2022-2023 period.
+  - name: total_enquiries_2022_2023
+    description: Total number of enquiries received in the 2022-2023 period.
+  - name: unique_featured_properties_purchased_2022_2023
+    description: Number of unique featured properties purchased in the 2022-2023 period.
+  - name: total_order_forms_2023_2024
+    description: Total number of order forms for the 2023-2024 period.
+  - name: target_this_season_2023_2024
+    description: Target metrics for the 2023-2024 season.
+  - name: live_properties_in_season_2023_2024
+    description: Number of properties live during the 2023-2024 season.
+  - name: current_live_properties_2023_2024
+    description: Current number of live properties for the 2023-2024 period.
+  - name: total_leads_2023_2024
+    description: Total number of leads generated in the 2023-2024 period.
+  - name: total_enquiries_2023_2024
+    description: Total number of enquiries received in the 2023-2024 period.
+  - name: unique_featured_properties_purchased_2023_2024
+    description: Number of unique featured properties purchased in the 2023-2024 period.
+  - name: total_order_forms_2024_2025
+    description: Total number of order forms for the 2024-2025 period.
+  - name: target_this_season_2024_2025
+    description: Target metrics for the 2024-2025 season.
+  - name: live_properties_in_season_2024_2025
+    description: Number of properties live during the 2024-2025 season.
+  - name: current_live_properties_2024_2025
+    description: Current number of live properties for the 2024-2025 period.
+  - name: total_leads_2024_2025
+    description: Total number of leads generated in the 2024-2025 period.
+  - name: total_enquiries_2024_2025
+    description: Total number of enquiries received in the 2024-2025 period.
+  - name: unique_featured_properties_purchased_2024_2025
+    description: Number of unique featured properties purchased in the 2024-2025 period.
+  - name: total_order_forms_2025_2026
+    description: Total number of order forms for the 2025-2026 period.
+  - name: target_this_season_2025_2026
+    description: Target metrics for the 2025-2026 season.
+  - name: live_properties_in_season_2025_2026
+    description: Number of properties live during the 2025-2026 season.
+  - name: current_live_properties_2025_2026
+    description: Current number of live properties for the 2025-2026 period.
+  - name: total_leads_2025_2026
+    description: Total number of leads generated in the 2025-2026 period.
+  - name: total_enquiries_2025_2026
+    description: Total number of enquiries received in the 2025-2026 period.
+  - name: unique_featured_properties_purchased_2025_2026
+    description: Number of unique featured properties purchased in the 2025-2026 period.
+
+
+
+
+
+
+  # -----------------------------------------------
+  # BREAK:int_salesforce__opportunities_enriched
+  # -----------------------------------------------
+- name: int_salesforce__opportunities_enriched
+  description: This model enriches Salesforce opportunity data by integrating detailed
+    account and portfolio information. It provides a comprehensive view of opportunities,
+    including portfolio sizes by type and detailed account attributes, facilitating
+    in-depth analysis of sales opportunities and performance.
+  columns:
+  - name: opportunity_id
+    data_tests:
+      - unique
+      - not_null
+    description: Unique identifier for each sales opportunity.
+  - name: account_id
+    description: Identifier for the account associated with the opportunity.
+  - name: record_type_id
+    description: Identifier for the type of record, categorizing the opportunity.
+  - name: campaign_id
+    description: Identifier for the marketing campaign linked to the opportunity.
+  - name: pricebook_2_id
+    description: Identifier for the pricebook associated with the opportunity.
+  - name: owner_id
+    description: Identifier for the user who owns the opportunity.
+  - name: created_by_id
+    description: Identifier for the user who created the opportunity record.
+  - name: last_modified_by_id
+    description: Identifier for the user who last modified the opportunity record.
+  - name: contact_id
+    description: Identifier for the primary contact related to the opportunity.
+  - name: synced_quote_id
+    description: Identifier for the quote synced with the opportunity.
+  - name: last_amount_changed_history_id
+    description: Identifier for the last change in the opportunity amount.
+  - name: last_close_date_changed_history_id
+    description: Identifier for the last change in the opportunity close date.
+  - name: activity_metric_id
+    description: Identifier for the activity metrics associated with the opportunity.
+  - name: activity_metric_rollup_id
+    description: Identifier for the rollup of activity metrics for the opportunity.
+  - name: name
+    description: Name of the opportunity.
+  - name: description
+    description: Detailed description of the opportunity.
+  - name: type
+    description: Type or category of the opportunity.
+  - name: close_date
+    description: The date when the opportunity is expected to close.
+  - name: created_date
+    description: Timestamp when the opportunity was created.
+  - name: last_modified_date
+    description: Timestamp when the opportunity was last modified.
+  - name: system_modstamp
+    description: System modification timestamp for the opportunity.
+  - name: last_activity_date
+    description: Date of the last activity on the opportunity.
+  - name: last_stage_change_date
+    description: Timestamp of the last stage change in the opportunity.
+  - name: last_viewed_date
+    description: Timestamp when the opportunity was last viewed.
+  - name: last_referenced_date
+    description: Timestamp when the opportunity was last referenced.
+  - name: agreement_sent_date
+    description: Date when the agreement was sent for the opportunity.
+  - name: agreement_signed_date
+    description: Date when the agreement was signed for the opportunity.
+  - name: competitor_contract_end_date
+    description: Date when a competitor's contract ends, related to the opportunity.
+  - name: contract_end_date
+    description: End date of the contract associated with the opportunity.
+  - name: contract_start_date
+    description: Start date of the contract associated with the opportunity.
+  - name: go_live_call_y_2
+    description: Date for the go-live call in year 2 for the opportunity.
+  - name: go_live_call_year_1
+    description: Date for the go-live call in year 1 for the opportunity.
+  - name: voided_date
+    description: Date when the opportunity was voided.
+  - name: callback_date_time
+    description: Scheduled date and time for a callback related to the opportunity.
+  - name: fivetran_synced
+    description: Timestamp when the opportunity data was last synced with Fivetran.
+  - name: amount
+    description: Monetary value of the opportunity.
+  - name: is_deleted
+    description: Indicates if the opportunity record is deleted.
+  - name: stage_name
+    description: Current stage of the opportunity in the sales process.
+  - name: probability
+    description: Probability of the opportunity being won.
+  - name: total_opportunity_quantity
+    description: Total quantity associated with the opportunity.
+  - name: next_step
+    description: Next step in the sales process for the opportunity.
+  - name: lead_source
+    description: Source from which the opportunity lead was generated.
+  - name: is_closed
+    description: Indicates if the opportunity is closed.
+  - name: is_won
+    description: Indicates if the opportunity is won.
+  - name: forecast_category
+    description: Category used for forecasting the opportunity.
+  - name: forecast_category_name
+    description: Name of the forecast category for the opportunity.
+  - name: has_opportunity_line_item
+    description: Indicates if the opportunity has associated line items.
+  - name: push_count
+    description: Number of times the opportunity has been pushed to a later date.
+  - name: fiscal_quarter
+    description: Fiscal quarter in which the opportunity is categorized.
+  - name: fiscal_year
+    description: Fiscal year in which the opportunity is categorized.
+  - name: fiscal
+    description: Fiscal period associated with the opportunity.
+  - name: has_open_activity
+    description: Indicates if there are open activities related to the opportunity.
+  - name: has_overdue_task
+    description: Indicates if there are overdue tasks related to the opportunity.
+  - name: advertising_platforms
+    description: Advertising platforms associated with the opportunity.
+  - name: agreement_signed_by
+    description: Name of the person who signed the agreement for the opportunity.
+  - name: agreement_status
+    description: Current status of the agreement related to the opportunity.
+  - name: approached_by_competitor
+    description: Indicates if the opportunity was approached by a competitor.
+  - name: area_of_interest
+    description: Area of interest related to the opportunity.
+  - name: associated_city
+    description: City associated with the opportunity.
+  - name: billing_model
+    description: Billing model used for the opportunity.
+  - name: bills_included
+    description: Indicates if bills are included in the opportunity.
+  - name: crm_provider
+    description: CRM provider associated with the opportunity.
+  - name: competitor_commission_per_tenant
+    description: Commission per tenant offered by a competitor for the opportunity.
+  - name: competitor_name
+    description: Name of the competitor related to the opportunity.
+  - name: drivers
+    description: Key drivers influencing the opportunity.
+  - name: feed_provider
+    description: Feed provider associated with the opportunity.
+  - name: letting_type
+    description: Type of letting associated with the opportunity.
+  - name: percentage_of_portfolio_let
+    description: Percentage of the portfolio that is let for the opportunity.
+  - name: portfolio_size
+    description: Size of the portfolio associated with the opportunity.
+  - name: require_advertising
+    description: Indicates if advertising is required for the opportunity.
+  - name: void_reason
+    description: Reason for voiding the opportunity.
+  - name: lost_reason
+    description: Reason for losing the opportunity.
+  - name: count
+    description: Count of items or actions related to the opportunity.
+  - name: maximum_number_of_live_properties
+    description: Maximum number of live properties associated with the opportunity.
+  - name: specific_terms
+    description: Specific terms related to the opportunity.
+  - name: percentage_professional
+    description: Percentage of the portfolio that is professional for the opportunity.
+  - name: percentage_student
+    description: Percentage of the portfolio that is student for the opportunity.
+  - name: contact_type
+    description: Type of contact associated with the opportunity.
+  - name: blockers
+    description: Blockers preventing the opportunity from progressing.
+  - name: previous_relationship
+    description: Previous relationship details related to the opportunity.
+  - name: contract_length
+    description: Length of the contract associated with the opportunity.
+  - name: mobile_phone
+    description: Mobile phone number related to the opportunity.
+  - name: special_condition
+    description: Special conditions associated with the opportunity.
+  - name: listings
+    description: Listings associated with the opportunity.
+  - name: lost_reason_description
+    description: Description of the reason for losing the opportunity.
+  - name: portfolio_notes
+    description: Notes related to the portfolio for the opportunity.
+  - name: realistic_sharer_portfolio
+    description: Realistic size of the sharer portfolio for the opportunity.
+  - name: realistic_student_portfolio
+    description: Realistic size of the student portfolio for the opportunity.
+  - name: other_blocker_description
+    description: Description of other blockers for the opportunity.
+  - name: high_priority
+    description: Indicates if the opportunity is of high priority.
+  - name: auto_renewal
+    description: Indicates if the opportunity contract has auto-renewal.
+  - name: btr_pbsa
+    description: Build to Rent or Purpose Built Student Accommodation related to the
+      opportunity.
+  - name: fuel_included
+    description: Indicates if fuel is included in the opportunity.
+  - name: broadband_included
+    description: Indicates if broadband is included in the opportunity.
+  - name: commision_percentage
+    description: Commission percentage for the opportunity.
+  - name: number_of_buildings
+    description: Number of buildings associated with the opportunity.
+  - name: tv_license_included
+    description: Indicates if TV license is included in the opportunity.
+  - name: total_units
+    description: Total units associated with the opportunity.
+  - name: water_included
+    description: Indicates if water is included in the opportunity.
+  - name: marketing_source
+    description: Source of marketing for the opportunity.
+  - name: marketing_qualified
+    description: Indicates if the opportunity is marketing qualified.
+  - name: current_engagement_level
+    description: Current engagement level with the opportunity.
+  - name: key_performance_indicators
+    description: Key performance indicators for the opportunity.
+  - name: marketing_contribution
+    description: Contribution of marketing to the opportunity.
+  - name: partner_satisfaction_rating
+    description: Satisfaction rating from partners related to the opportunity.
+  - name: partnership_status
+    description: Status of the partnership related to the opportunity.
+  - name: advertising_opportunities
+    description: Advertising opportunities related to the opportunity.
+  - name: exclusivity_terms
+    description: Exclusivity terms associated with the opportunity.
+  - name: committed_to_deliver_expected_contracts
+    description: Indicates if there is a commitment to deliver expected contracts
+      for the opportunity.
+  - name: agent_understands_to_return_contracts
+    description: Indicates if the agent understands the need to return contracts for
+      the opportunity.
+  - name: expected_contracts_to_be_returned
+    description: Expected number of contracts to be returned for the opportunity.
+  - name: tenancy_sign_up_process
+    description: Process for signing up tenancy related to the opportunity.
+  - name: utility_form_sign_up_process
+    description: Process for signing up utility forms related to the opportunity.
+  - name: enquiry_to_form_send_timeframe_days
+    description: Timeframe in days from enquiry to form send for the opportunity.
+  - name: fivetran_deleted
+    description: Indicates if the opportunity record is deleted in Fivetran.
+  - name: create_renewal
+    description: Indicates if a renewal is created for the opportunity.
+  - name: recycled_main_lead
+    description: Main lead that is recycled for the opportunity.
+  - name: account_name
+    description: Name of the account associated with the opportunity.
+  - name: record_type_name
+    description: Name of the record type for the opportunity.
+  - name: owner_name
+    description: Name of the owner of the opportunity.
+  - name: created_by_name
+    description: Name of the user who created the opportunity.
+  - name: last_modified_by_name
+    description: Name of the user who last modified the opportunity.
+  - name: total_student_portfolio
+    description: Total size of the student portfolio for the opportunity.
+  - name: total_sharer_portfolio
+    description: Total size of the sharer portfolio for the opportunity.
+  - name: total_portfolio_size
+    description: Total size of the portfolio for the opportunity.
+  - name: account_owner_id
+    description: Identifier for the owner of the account associated with the opportunity.
+  - name: parent_account_id
+    description: Identifier for the parent account associated with the opportunity.
+  - name: landlord_agent_name
+    description: Name of the landlord agent associated with the opportunity.
+  - name: annual_revenue
+    description: Annual revenue of the account associated with the opportunity.
+  - name: account_type
+    description: Type of account associated with the opportunity.
+  - name: account_record_type_name
+    description: Name of the record type for the account associated with the opportunity.
+  - name: account_site
+    description: Site of the account associated with the opportunity.
+  - name: industry
+    description: Industry of the account associated with the opportunity.
+  - name: rating
+    description: Rating of the account associated with the opportunity.
+  - name: sic
+    description: Standard Industrial Classification code for the account.
+  - name: ticker_symbol
+    description: Ticker symbol for the account associated with the opportunity.
+  - name: number_of_employees
+    description: Number of employees in the account associated with the opportunity.
+  - name: ownership
+    description: Ownership type of the account associated with the opportunity.
+  - name: account_number
+    description: Account number associated with the opportunity.
+  - name: account_last_activity_date
+    description: Date of the last activity on the account associated with the opportunity.
+  - name: account_created_date
+    description: Timestamp when the account associated with the opportunity was created.
+  - name: account_last_modified_date
+    description: Timestamp when the account associated with the opportunity was last
+      modified.
+  - name: account_description
+    description: Description of the account associated with the opportunity.
+  - name: account_associated_city
+    description: City associated with the account related to the opportunity.
+  - name: account_billing_postal_code
+    description: Billing postal code of the account associated with the opportunity.
+  - name: account_date_closed
+    description: Date when the account associated with the opportunity was closed.
+  - name: account_date_won
+    description: Date when the account associated with the opportunity was won.

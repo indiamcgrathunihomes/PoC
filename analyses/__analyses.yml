@@ -1,0 +1,84 @@
+version: 2
+
+analyses:
+  # -----------------------------------------------
+  # BREAK: audit__compare_dev_model_vs_prod
+  # -----------------------------------------------
+  - name: audit__compare_dev_model_vs_prod
+    description: >
+      Compares a **dev model** against its **production counterpart** by checking for
+      mismatches in values across all shared columns using
+      `audit_helper.compare_all_columns`.
+
+      ---
+      ✅ WHAT IT DOES:
+      • Loads a prod model using `api.Relation.create`
+      • Loads the dev model using `ref()`
+      • Compares every column using a shared primary key
+      • Outputs the comparison as a **SQL block**, which is printed to the CLI logs
+
+      ---
+      ▶️ HOW TO RUN:
+      From dbt Cloud IDE or CLI:
+        Temporarily remove the JINJA raw and endraw at file top and bottom (this prevents file failing and causing issues for other users)
+
+        dbt compile --select audit__compare_dev_model_vs_prod
+
+      This will **compile the SQL** and **print the results as a table summary in DBT Cloud IDE in the summary dropdown** 
+      This will **compile the SQL** and **print the diff query** to the logs. You can find the line:
+
+        ```text
+        select ...
+        from ...
+        ```
+
+      You can then **copy-paste that SQL into Snowflake (or any query editor)** to preview differences row-by-row and column-by-column.
+
+      ---
+      ⚙️ HOW TO CUSTOMISE:
+      Inside the analysis file (`analyses/audit__compare_dev_model_vs_prod.sql`), edit:
+
+        {% raw %}
+        {% set prod_relation = api.Relation.create(
+            database = "DATA_AND_ANALYTICS_PROD",
+            schema = "BASE",
+            identifier = "BASE_STUDENT_MARKETSHARE_AGENT_LIST",
+            type = "table"
+        ) %}
+
+        {% set dev_relation = ref('base_student_marketshare_agent_list') %}
+        {% endraw %}
+
+      Make sure:
+        • Both models exist
+        • They share the same `primary_key` (e.g. `"record_id"`)
+
+      ---
+      📄 TIP:
+      The generated SQL can be saved into a model or scheduled query if you want to store diffs long term.
+
+    meta:
+      author: Data & Analytics Team
+      last_updated: "{{ run_started_at.strftime('%Y-%m-%d') }}"
+      primary_use: Pre-deployment model checks
+      usage_context: Debugging, regression testing, model audits
+
+    columns:
+      - name: column_name
+        description: Name of the column being compared
+
+      - name: count_total
+        description: Total number of rows in each dataset
+
+      - name: count_matches
+        description: Number of identical values in that column
+
+      - name: count_differences
+        description: Number of mismatched values in that column
+
+      - name: example_differences
+        description: Example mismatches (if printed by SQL)
+
+
+    docs:
+      show: true

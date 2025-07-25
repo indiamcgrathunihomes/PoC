@@ -5,8 +5,8 @@ client_list_consistent_with_board_kpi_reporting as (
     select
         acc.account_id as salesforce_18_digit_id,
         acc.account_id as record_id,
-        acc.name as company,
-        acc.name,
+        acc.account_name as company,
+        acc.account_name as name,
         acc.associated_city,
         acc.billing_postal_code as postcode,
         acc.total_student_portfolio,
@@ -15,15 +15,11 @@ client_list_consistent_with_board_kpi_reporting as (
         'Account' as sf_object,
         null as phone,
         null as competitor,
-        acc.record_type_name as record_type,
+        acc.record_type_name as record_type_name,
         null as email,
         null as stage,
-        ana.total_order_forms
-    from {{ ref("stg_salesforce__accounts") }} as acc
-    left join
-        {{ ref('stg_salesforce__analytics') }} as ana
-        -- Static filter for the current FY26
-        on acc.account_id = ana.landlord and ana.name = '2025-2026'
+        acc.total_order_forms_2025_2026 as total_order_forms
+    from {{ ref("int_salesforce__analytics_pivoted_by_account") }} as acc
     where
         1 = 1
         and acc.record_type_name = 'Landlord/Agent'
@@ -37,7 +33,7 @@ active_new_business_b2b_opportunities as (
     select
         account_id as salesforce_18_digit_id,
         opportunity_id as record_id,
-        landlord_agent_name as company,
+        account_name as company,
         account_name as name,
         account_associated_city as associated_city,
         account_billing_postal_code as postcode,

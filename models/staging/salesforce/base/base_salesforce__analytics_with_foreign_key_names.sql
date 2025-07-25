@@ -1,20 +1,20 @@
 with analytics as (
     select *
-    from {{ ref('stg_salesforce__analytics') }}
+    from {{ source('salesforce', 'analytics') }}
 ),
 
 accounts as (
     select
-        account_id,
+        id,
         name
-    from {{ ref('stg_salesforce__accounts') }}
+    from {{ source('salesforce', 'account') }}
 ),
 
 users as (
     select
-        user_id,
+        id,
         name 
-    from {{ ref('stg_salesforce__users') }}
+    from {{ source('salesforce', 'user') }}
 ),
 
 analytics_with_foreign_keys as (
@@ -30,15 +30,15 @@ analytics_with_foreign_keys as (
 
     -- Link to Account (landlord)
     left join accounts acc
-        on a.landlord = acc.account_id
+        on a.landlord_c = acc.id
 
     -- Link to Created By user
     left join users created_by
-        on a.created_by_id = created_by.user_id
+        on a.created_by_id = created_by.id
 
     -- Link to Last Modified By user
     left join users last_modified_by
-        on a.last_modified_by_id = last_modified_by.user_id
+        on a.last_modified_by_id = last_modified_by.id
 )
 
 select *

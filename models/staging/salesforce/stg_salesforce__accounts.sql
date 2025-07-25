@@ -35,7 +35,7 @@ select -- Identifiers,
 -- Descriptive,
 
     "NAME" as name,
-    "TYPE" as type,
+    --"TYPE" as type,
     "INDUSTRY" as industry,
     "DESCRIPTION" as description,
 

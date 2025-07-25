@@ -11,7 +11,7 @@ excluding_deleted_records as (
 
 snake_case_field_names_and_clean_timestamps as (
     -- Original command was using macro and then compiled output shown here for consistency and visibilty of SF Field Aliases
-    {% raw %}{% endraw %} from excluding_deleted_records
+     -- Original command was:   select {% raw %}{{ select_fields_structured(ref('base_salesforce__analytics_with_foreign_key_names')) }}{% endraw %} from excluding_deleted_records
 
     select -- Identifiers,
 

@@ -1,8 +1,8 @@
 models:
   # -----------------------------------------------
-  # BREAK:student_marketshare_agent_list
+  # BREAK:base_student_marketshare_agent_list
   # -----------------------------------------------
-- name: student_marketshare_agent_list
+- name: base_student_marketshare_agent_list
   description: This model consolidates data from Salesforce to provide a comprehensive
     list of active customers, opportunities, and leads related to student market share.
     It categorizes records into 'Customer' and 'Prospect' and includes details such

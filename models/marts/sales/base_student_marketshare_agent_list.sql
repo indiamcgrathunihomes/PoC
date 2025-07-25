@@ -15,7 +15,7 @@ client_list_consistent_with_board_kpi_reporting as (
         'Account' as sf_object,
         null as phone,
         null as competitor,
-        record_type_name as record_type_name,
+        record_type_name as record_type,
         null as email,
         null as stage,
         total_order_forms_2025_2026 as total_order_forms

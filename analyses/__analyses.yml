@@ -20,6 +20,7 @@ analyses:
       ---
       ▶️ HOW TO RUN:
       From dbt Cloud IDE or CLI:
+        Temporarily remove the JINJA raw and endraw at file top and bottom (this prevents file failing and causing issues for other users)
 
         dbt compile --select audit__compare_dev_model_vs_prod
 

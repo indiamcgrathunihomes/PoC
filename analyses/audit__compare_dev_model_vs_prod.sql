@@ -1,3 +1,4 @@
+{% raw %}   -- COMMENT OUT WHEN USING FILE
 {% set prod_relation = api.Relation.create(
     database = "DATA_AND_ANALYTICS_PROD",
     schema = "BASE",
@@ -48,3 +49,4 @@
 {{ log(rendered_query, info=True) }}
 
 {{ rendered_query }}
+{% endraw %} -- COMMENT OUT WHEN USING FILE

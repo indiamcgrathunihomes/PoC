@@ -1,4 +1,20 @@
 models:
+
+  # -----------------------------------------------
+  # BREAK: base_salesforce__analytics_with_foreign_key_names
+  # -----------------------------------------------
+  - name: base_salesforce__analytics_with_foreign_key_names
+    description: >
+      Base model for Salesforce Analytics object with names for Foreign Key IDs.
+      Includes raw columns plus lookups for foreign keys that would otherwise only be IDs: account name, created by, modified by.
+    columns:
+      - name: id
+        description: Primary key from Salesforce Analytics Object
+        tests:
+          - not_null
+          - unique
+
+
   # -----------------------------------------------
   # BREAK: base_salesforce__accounts_with_foreign_key_names
   # -----------------------------------------------

@@ -1,5 +1,3 @@
-{{ config(materialized = 'table') }}
-
 {% set years = ['2021-2022', '2022-2023', '2023-2024', '2024-2025', '2025-2026'] %}
 {% set metrics = [
     'total_order_forms',
@@ -11,20 +9,21 @@
     'unique_featured_properties_purchased'
 ] %}
 
-WITH
+WITH agent_accounts AS (
 
-account_details AS (
     SELECT
         account_id,
         name AS account_name,
         record_type_name,
         associated_city,
         billing_postal_code,
-        total_student_portfolio,
-        account_type,
         date_closed,
-        date_won
+        date_won,
+        total_student_portfolio,
+        account_type
     FROM {{ ref('stg_salesforce__accounts') }}
+    WHERE record_type_name = 'Landlord/Agent'
+
 ),
 
 {% for year in years %}
@@ -39,12 +38,13 @@ analytics_{{ year | replace('-', '_') }} AS (
 ){% if not loop.last %},{% endif %}
 {% endfor %},
 
-all_account_ids AS (
+all_analytics_accounts AS (
     SELECT DISTINCT landlord AS account_id
     FROM {{ ref('stg_salesforce__analytics') }}
 ),
 
-pivoted AS (
+analytics_pivoted AS (
+
     SELECT
         ids.account_id,
 
@@ -57,7 +57,7 @@ pivoted AS (
             {% endfor %}
         {% endfor %}
 
-    FROM all_account_ids AS ids
+    FROM all_analytics_accounts AS ids
 
     {% for year in years %}
     LEFT JOIN analytics_{{ year | replace('-', '_') }} AS a_{{ year | replace('-', '_') }}
@@ -66,15 +66,14 @@ pivoted AS (
 )
 
 SELECT
-    p.*,
-    a.account_name,
-    a.record_type_name,
-    a.associated_city,
-    a.billing_postal_code,
-    a.total_student_portfolio,
-    a.account_type,
-    a.date_closed,
-    a.date_won
-FROM pivoted p
-LEFT JOIN account_details a
-    ON p.account_id = a.account_id
+    acc.*,
+
+    {% for year in years %}
+        {% for metric in metrics %}
+            analytics.{{ metric }}_{{ year[:4] }}_{{ year[5:] }}{% if not loop.last or not year == years[-1] %},{% endif %}
+        {% endfor %}
+    {% endfor %}
+
+FROM agent_accounts AS acc
+LEFT JOIN analytics_pivoted AS analytics
+    ON acc.account_id = analytics.account_id

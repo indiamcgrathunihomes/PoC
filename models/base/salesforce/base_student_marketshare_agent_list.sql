@@ -55,6 +55,7 @@ with
         where
             1 = 1
             and account_record_type_name = 'Landlord/Agent'
+            and record_type_name = 'New Business B2B'
             and account_date_closed is null
             and account_date_won is null
             and stage_name in (

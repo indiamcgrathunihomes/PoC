@@ -36,7 +36,7 @@ accounts as (
         parent_id as parent_account_id,
         landlord_agent_name,
         annual_revenue,
-        type as account_type,
+        account_type,
         record_type_name as account_record_type_name,
         site as account_site,
         industry,

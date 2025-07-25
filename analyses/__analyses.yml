@@ -1,6 +1,9 @@
 version: 2
 
 analyses:
+  # -----------------------------------------------
+  # BREAK: audit__compare_dev_model_vs_prod
+  # -----------------------------------------------
   - name: audit__compare_dev_model_vs_prod
     description: >
       Compares a **dev model** against its **production counterpart** by checking for

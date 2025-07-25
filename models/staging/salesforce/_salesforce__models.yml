@@ -1706,6 +1706,10 @@ models:
       - name: recycled_main_lead
         description: Recycled main lead information.
 
+
+
+
+
   # -----------------------------------------------
   # BREAK: stg_salesforce__opportunity_products
   # -----------------------------------------------
@@ -1816,6 +1820,10 @@ models:
       - name: fivetran_deleted
         description: Indicates whether the record type has been deleted in Fivetran.
 
+
+
+
+
   # -----------------------------------------------
   # BREAK: stg_salesforce__analytics
   # -----------------------------------------------
@@ -1828,6 +1836,9 @@ models:
     columns:
       - name: analytics_id
         description: Unique identifier for each analytics record.
+        data_tests:
+          - unique
+          - not_null
       - name: created_by_id
         description: Identifier of the user who created the record.
       - name: last_modified_by_id
@@ -1976,3 +1987,457 @@ models:
         description: Indicates if the contract was signed electronically.
       - name: fivetran_deleted
         description: Indicates if the record was deleted by Fivetran.
+
+
+
+
+
+# -----------------------------------------------
+# BREAK: stg_salesforce__users
+# -----------------------------------------------
+  - name: stg_salesforce__users
+    description: This model transforms and cleans Salesforce user data, providing a
+      comprehensive view of user attributes and preferences. It includes user roles,
+      contact information, login details, and various user preferences, enabling detailed
+      analysis and reporting on user behavior and settings.
+    columns:
+    - name: user_id
+      description: Unique identifier for the user.
+      data_tests:
+          - unique
+          - not_null
+    - name: user_role_id
+      description: Identifier for the user's role.
+    - name: profile_id
+      description: Identifier for the user's profile.
+    - name: delegated_approver_id
+      description: Identifier for the delegated approver.
+    - name: manager_id
+      description: Identifier for the user's manager.
+    - name: created_by_id
+      description: Identifier for the user who created this record.
+    - name: last_modified_by_id
+      description: Identifier for the user who last modified this record.
+    - name: contact_id
+      description: Identifier for the user's contact information.
+    - name: account_id
+      description: Identifier for the user's account.
+    - name: call_center_id
+      description: Identifier for the user's call center.
+    - name: individual_id
+      description: Identifier for the individual user.
+    - name: nvmcontact_world_nvm_agent_id
+      description: Identifier for the NVM contact world agent.
+    - name: jira_id
+      description: Identifier for the user's JIRA account.
+    - name: name
+      description: Full name of the user.
+    - name: last_login_date
+      description: Timestamp of the user's last login.
+    - name: created_date
+      description: Timestamp when the user record was created.
+    - name: last_modified_date
+      description: Timestamp when the user record was last modified.
+    - name: system_modstamp
+      description: System modification timestamp.
+    - name: password_expiration_date
+      description: Timestamp when the user's password expires.
+    - name: su_access_expiration_date
+      description: Date when the user's SU access expires.
+    - name: offline_trial_expiration_date
+      description: Timestamp when the offline trial expires.
+    - name: offline_pda_trial_expiration_date
+      description: Timestamp when the offline PDA trial expires.
+    - name: last_viewed_date
+      description: Timestamp when the user record was last viewed.
+    - name: last_referenced_date
+      description: Timestamp when the user record was last referenced.
+    - name: nvmcontact_world_most_recent_call_event_timestamp
+      description: Timestamp of the most recent call event in NVM contact world.
+    - name: dfsle_provisioned
+      description: Date when the DFSLE was provisioned.
+    - name: away_end_date_time
+      description: Timestamp when the user's away status ends.
+    - name: away_start_date_time
+      description: Timestamp when the user's away status starts.
+    - name: fivetran_synced
+      description: Timestamp when the record was last synced with Fivetran.
+    - name: username
+      description: Username of the user.
+    - name: last_name
+      description: Last name of the user.
+    - name: first_name
+      description: First name of the user.
+    - name: company_name
+      description: Name of the company the user is associated with.
+    - name: division
+      description: Division within the company the user belongs to.
+    - name: department
+      description: Department within the company the user belongs to.
+    - name: title
+      description: Job title of the user.
+    - name: street
+      description: Street address of the user.
+    - name: city
+      description: City where the user is located.
+    - name: state
+      description: State where the user is located.
+    - name: postal_code
+      description: Postal code of the user's location.
+    - name: country
+      description: Country where the user is located.
+    - name: latitude
+      description: Latitude of the user's location.
+    - name: longitude
+      description: Longitude of the user's location.
+    - name: geocode_accuracy
+      description: Accuracy of the geocode for the user's location.
+    - name: email
+      description: Email address of the user.
+    - name: email_preferences_auto_bcc
+      description: Indicates if the user prefers auto BCC for emails.
+    - name: email_preferences_auto_bcc_stay_in_touch
+      description: Indicates if the user prefers auto BCC for stay in touch emails.
+    - name: email_preferences_stay_in_touch_reminder
+      description: Indicates if the user prefers reminders for stay in touch emails.
+    - name: sender_email
+      description: Email address used by the user as sender.
+    - name: sender_name
+      description: Name used by the user as sender.
+    - name: signature
+      description: Email signature of the user.
+    - name: stay_in_touch_subject
+      description: Subject line for stay in touch emails.
+    - name: stay_in_touch_signature
+      description: Signature for stay in touch emails.
+    - name: stay_in_touch_note
+      description: Note included in stay in touch emails.
+    - name: phone
+      description: Phone number of the user.
+    - name: fax
+      description: Fax number of the user.
+    - name: mobile_phone
+      description: Mobile phone number of the user.
+    - name: alias
+      description: Alias of the user.
+    - name: community_nickname
+      description: Community nickname of the user.
+    - name: badge_text
+      description: Text displayed on the user's badge.
+    - name: is_active
+      description: Indicates if the user is active.
+    - name: time_zone_sid_key
+      description: Time zone setting of the user.
+    - name: locale_sid_key
+      description: Locale setting of the user.
+    - name: receives_info_emails
+      description: Indicates if the user receives informational emails.
+    - name: receives_admin_info_emails
+      description: Indicates if the user receives administrative informational emails.
+    - name: email_encoding_key
+      description: Email encoding setting of the user.
+    - name: user_type
+      description: Type of user.
+    - name: start_day
+      description: Start day of the user's schedule.
+    - name: end_day
+      description: End day of the user's schedule.
+    - name: language_locale_key
+      description: Language locale setting of the user.
+    - name: employee_number
+      description: Employee number of the user.
+    - name: user_permissions_marketing_user
+      description: Indicates if the user has marketing permissions.
+    - name: user_permissions_offline_user
+      description: Indicates if the user has offline permissions.
+    - name: user_permissions_avantgo_user
+      description: Indicates if the user has AvantGo permissions.
+    - name: user_permissions_call_center_auto_login
+      description: Indicates if the user has call center auto login permissions.
+    - name: user_permissions_sfcontent_user
+      description: Indicates if the user has SFContent permissions.
+    - name: user_permissions_knowledge_user
+      description: Indicates if the user has knowledge permissions.
+    - name: user_permissions_interaction_user
+      description: Indicates if the user has interaction permissions.
+    - name: user_permissions_support_user
+      description: Indicates if the user has support permissions.
+    - name: user_permissions_chatter_answers_user
+      description: Indicates if the user has Chatter Answers permissions.
+    - name: forecast_enabled
+      description: Indicates if forecasting is enabled for the user.
+    - name: user_preferences_activity_reminders_popup
+      description: Indicates if the user prefers activity reminders as popups.
+    - name: user_preferences_event_reminders_checkbox_default
+      description: Indicates if the user prefers event reminders as default checkboxes.
+    - name: user_preferences_task_reminders_checkbox_default
+      description: Indicates if the user prefers task reminders as default checkboxes.
+    - name: user_preferences_reminder_sound_off
+      description: Indicates if the user prefers reminder sounds to be off.
+    - name: user_preferences_disable_all_feeds_email
+      description: Indicates if the user prefers to disable all feeds email.
+    - name: user_preferences_disable_followers_email
+      description: Indicates if the user prefers to disable followers email.
+    - name: user_preferences_disable_profile_post_email
+      description: Indicates if the user prefers to disable profile post email.
+    - name: user_preferences_disable_change_comment_email
+      description: Indicates if the user prefers to disable change comment email.
+    - name: user_preferences_disable_later_comment_email
+      description: Indicates if the user prefers to disable later comment email.
+    - name: user_preferences_dis_prof_post_comment_email
+      description: Indicates if the user prefers to disable profile post comment email.
+    - name: user_preferences_content_no_email
+      description: Indicates if the user prefers no content email.
+    - name: user_preferences_content_email_as_and_when
+      description: Indicates if the user prefers content email as and when.
+    - name: user_preferences_apex_pages_developer_mode
+      description: Indicates if the user prefers Apex pages developer mode.
+    - name: user_preferences_receive_no_notifications_as_approver
+      description: Indicates if the user prefers to receive no notifications as approver.
+    - name: user_preferences_receive_notifications_as_delegated_approver
+      description: Indicates if the user prefers to receive notifications as delegated
+        approver.
+    - name: user_preferences_hide_csnget_chatter_mobile_task
+      description: Indicates if the user prefers to hide CSNGet Chatter mobile task.
+    - name: user_preferences_disable_mentions_post_email
+      description: Indicates if the user prefers to disable mentions post email.
+    - name: user_preferences_dis_mentions_comment_email
+      description: Indicates if the user prefers to disable mentions comment email.
+    - name: user_preferences_hide_csndesktop_task
+      description: Indicates if the user prefers to hide CSNDesktop task.
+    - name: user_preferences_hide_chatter_onboarding_splash
+      description: Indicates if the user prefers to hide Chatter onboarding splash.
+    - name: user_preferences_hide_second_chatter_onboarding_splash
+      description: Indicates if the user prefers to hide second Chatter onboarding splash.
+    - name: user_preferences_dis_comment_after_like_email
+      description: Indicates if the user prefers to disable comment after like email.
+    - name: user_preferences_disable_like_email
+      description: Indicates if the user prefers to disable like email.
+    - name: user_preferences_sort_feed_by_comment
+      description: Indicates if the user prefers to sort feed by comment.
+    - name: user_preferences_disable_message_email
+      description: Indicates if the user prefers to disable message email.
+    - name: user_preferences_disable_bookmark_email
+      description: Indicates if the user prefers to disable bookmark email.
+    - name: user_preferences_allow_conversation_reminders
+      description: Indicates if the user allows conversation reminders.
+    - name: user_preferences_disable_share_post_email
+      description: Indicates if the user prefers to disable share post email.
+    - name: user_preferences_action_launcher_einstein_gpt_consent
+      description: Indicates if the user consents to action launcher Einstein GPT.
+    - name: user_preferences_assistive_actions_enabled_in_action_launcher
+      description: Indicates if assistive actions are enabled in action launcher.
+    - name: user_preferences_enable_auto_sub_for_feeds
+      description: Indicates if the user enables auto subscription for feeds.
+    - name: user_preferences_disable_file_share_notifications_for_api
+      description: Indicates if the user disables file share notifications for API.
+    - name: user_preferences_show_title_to_external_users
+      description: Indicates if the user shows title to external users.
+    - name: user_preferences_show_manager_to_external_users
+      description: Indicates if the user shows manager to external users.
+    - name: user_preferences_show_email_to_external_users
+      description: Indicates if the user shows email to external users.
+    - name: user_preferences_show_work_phone_to_external_users
+      description: Indicates if the user shows work phone to external users.
+    - name: user_preferences_show_mobile_phone_to_external_users
+      description: Indicates if the user shows mobile phone to external users.
+    - name: user_preferences_show_fax_to_external_users
+      description: Indicates if the user shows fax to external users.
+    - name: user_preferences_show_street_address_to_external_users
+      description: Indicates if the user shows street address to external users.
+    - name: user_preferences_show_city_to_external_users
+      description: Indicates if the user shows city to external users.
+    - name: user_preferences_show_state_to_external_users
+      description: Indicates if the user shows state to external users.
+    - name: user_preferences_show_postal_code_to_external_users
+      description: Indicates if the user shows postal code to external users.
+    - name: user_preferences_show_country_to_external_users
+      description: Indicates if the user shows country to external users.
+    - name: user_preferences_show_profile_pic_to_guest_users
+      description: Indicates if the user shows profile picture to guest users.
+    - name: user_preferences_show_title_to_guest_users
+      description: Indicates if the user shows title to guest users.
+    - name: user_preferences_show_city_to_guest_users
+      description: Indicates if the user shows city to guest users.
+    - name: user_preferences_show_state_to_guest_users
+      description: Indicates if the user shows state to guest users.
+    - name: user_preferences_show_postal_code_to_guest_users
+      description: Indicates if the user shows postal code to guest users.
+    - name: user_preferences_show_country_to_guest_users
+      description: Indicates if the user shows country to guest users.
+    - name: user_preferences_show_forecasting_change_signals
+      description: Indicates if the user shows forecasting change signals.
+    - name: user_preferences_live_agent_miaw_setup_deflection
+      description: Indicates if the user has live agent MIAW setup deflection.
+    - name: user_preferences_hide_s_1_browser_ui
+      description: Indicates if the user prefers to hide S1 browser UI.
+    - name: user_preferences_disable_endorsement_email
+      description: Indicates if the user prefers to disable endorsement email.
+    - name: user_preferences_path_assistant_collapsed
+      description: Indicates if the user prefers path assistant collapsed.
+    - name: user_preferences_cache_diagnostics
+      description: Indicates if the user prefers cache diagnostics.
+    - name: user_preferences_show_email_to_guest_users
+      description: Indicates if the user shows email to guest users.
+    - name: user_preferences_show_manager_to_guest_users
+      description: Indicates if the user shows manager to guest users.
+    - name: user_preferences_show_work_phone_to_guest_users
+      description: Indicates if the user shows work phone to guest users.
+    - name: user_preferences_show_mobile_phone_to_guest_users
+      description: Indicates if the user shows mobile phone to guest users.
+    - name: user_preferences_show_fax_to_guest_users
+      description: Indicates if the user shows fax to guest users.
+    - name: user_preferences_show_street_address_to_guest_users
+      description: Indicates if the user shows street address to guest users.
+    - name: user_preferences_lightning_experience_preferred
+      description: Indicates if the user prefers lightning experience.
+    - name: user_preferences_hide_end_user_onboarding_assistant_modal
+      description: Indicates if the user prefers to hide end user onboarding assistant
+        modal.
+    - name: user_preferences_hide_lightning_migration_modal
+      description: Indicates if the user prefers to hide lightning migration modal.
+    - name: user_preferences_hide_sfx_welcome_mat
+      description: Indicates if the user prefers to hide SFX welcome mat.
+    - name: user_preferences_hide_bigger_photo_callout
+      description: Indicates if the user prefers to hide bigger photo callout.
+    - name: user_preferences_global_nav_bar_wtshown
+      description: Indicates if the user prefers global nav bar to be shown.
+    - name: user_preferences_global_nav_grid_menu_wtshown
+      description: Indicates if the user prefers global nav grid menu to be shown.
+    - name: user_preferences_create_lexapps_wtshown
+      description: Indicates if the user prefers create LEXApps to be shown.
+    - name: user_preferences_favorites_wtshown
+      description: Indicates if the user prefers favorites to be shown.
+    - name: user_preferences_record_home_section_collapse_wtshown
+      description: Indicates if the user prefers record home section collapse to be
+        shown.
+    - name: user_preferences_record_home_reserved_wtshown
+      description: Indicates if the user prefers record home reserved to be shown.
+    - name: user_preferences_favorites_show_top_favorites
+      description: Indicates if the user prefers to show top favorites.
+    - name: user_preferences_exclude_mail_app_attachments
+      description: Indicates if the user prefers to exclude mail app attachments.
+    - name: user_preferences_suppress_task_sfxreminders
+      description: Indicates if the user prefers to suppress task SFX reminders.
+    - name: user_preferences_suppress_event_sfxreminders
+      description: Indicates if the user prefers to suppress event SFX reminders.
+    - name: user_preferences_preview_custom_theme
+      description: Indicates if the user prefers to preview custom theme.
+    - name: user_preferences_has_celebration_badge
+      description: Indicates if the user has a celebration badge.
+    - name: user_preferences_user_debug_mode_pref
+      description: Indicates if the user prefers user debug mode.
+    - name: user_preferences_srhoverride_activities
+      description: Indicates if the user prefers SRH override activities.
+    - name: user_preferences_new_lightning_report_run_page_enabled
+      description: Indicates if the user prefers new lightning report run page enabled.
+    - name: user_preferences_reverse_open_activities_view
+      description: Indicates if the user prefers reverse open activities view.
+    - name: user_preferences_email_summarization_gpt_consent
+      description: Indicates if the user consents to email summarization GPT.
+    - name: user_preferences_has_sent_warning_email
+      description: Indicates if the user has sent a warning email.
+    - name: user_preferences_has_sent_warning_email_238
+      description: Indicates if the user has sent a warning email 238.
+    - name: user_preferences_has_sent_warning_email_240
+      description: Indicates if the user has sent a warning email 240.
+    - name: user_preferences_native_email_client
+      description: Indicates if the user prefers native email client.
+    - name: user_preferences_send_list_email_through_external_service
+      description: Indicates if the user prefers to send list email through external
+        service.
+    - name: user_preferences_hide_browse_product_redirect_confirmation
+      description: Indicates if the user prefers to hide browse product redirect confirmation.
+    - name: user_preferences_hide_online_sales_app_tab_visibility_requirements_modal
+      description: Indicates if the user prefers to hide online sales app tab visibility
+        requirements modal.
+    - name: user_preferences_hide_online_sales_app_welcome_mat
+      description: Indicates if the user prefers to hide online sales app welcome mat.
+    - name: user_preferences_show_forecasting_rounded_amounts
+      description: Indicates if the user prefers to show forecasting rounded amounts.
+    - name: is_partner
+      description: Indicates if the user is a partner.
+    - name: extension
+      description: Extension number of the user.
+    - name: portal_role
+      description: Role of the user in the portal.
+    - name: is_portal_enabled
+      description: Indicates if the portal is enabled for the user.
+    - name: federation_identifier
+      description: Federation identifier of the user.
+    - name: about_me
+      description: About me section of the user.
+    - name: full_photo_url
+      description: URL of the user's full photo.
+    - name: small_photo_url
+      description: URL of the user's small photo.
+    - name: is_ext_indicator_visible
+      description: Indicates if the external indicator is visible for the user.
+    - name: out_of_office_message
+      description: Out of office message of the user.
+    - name: medium_photo_url
+      description: URL of the user's medium photo.
+    - name: digest_frequency
+      description: Frequency of digest emails for the user.
+    - name: default_group_notification_frequency
+      description: Default frequency of group notifications for the user.
+    - name: banner_photo_url
+      description: URL of the user's banner photo.
+    - name: small_banner_photo_url
+      description: URL of the user's small banner photo.
+    - name: medium_banner_photo_url
+      description: URL of the user's medium banner photo.
+    - name: is_profile_photo_active
+      description: Indicates if the profile photo is active for the user.
+    - name: dsfs_dspro_sfmembership_status
+      description: Membership status in DSFS DSPRO for the user.
+    - name: dsfs_dspro_sfpassword
+      description: Password in DSFS DSPRO for the user.
+    - name: dsfs_dspro_sfusername
+      description: Username in DSFS DSPRO for the user.
+    - name: nvmcontact_world_most_recent_call_is_active
+      description: Indicates if the most recent call in NVM contact world is active.
+    - name: nvmcontact_world_most_recent_call
+      description: Details of the most recent call in NVM contact world.
+    - name: nvmcontact_world_notes_collapsed
+      description: Indicates if the notes in NVM contact world are collapsed.
+    - name: et_4_ae_5_default_et_page
+      description: Default ET page for ET 4 AE 5.
+    - name: et_4_ae_5_default_mid
+      description: Default MID for ET 4 AE 5.
+    - name: et_4_ae_5_exact_target_for_app_exchange_admin
+      description: Indicates if the user is an admin for ET 4 AE 5 exact target for
+        app exchange.
+    - name: et_4_ae_5_exact_target_for_app_exchange_user
+      description: Indicates if the user is a user for ET 4 AE 5 exact target for app
+        exchange.
+    - name: et_4_ae_5_exact_target_username
+      description: Username for ET 4 AE 5 exact target.
+    - name: et_4_ae_5_exact_target_oauth_token
+      description: OAuth token for ET 4 AE 5 exact target.
+    - name: et_4_ae_5_valid_exact_target_admin
+      description: Indicates if the user is a valid admin for ET 4 AE 5 exact target.
+    - name: et_4_ae_5_valid_exact_target_user
+      description: Indicates if the user is a valid user for ET 4 AE 5 exact target.
+    - name: wbsendit_campaign_monitor_user
+      description: User for WBSendit campaign monitor.
+    - name: split_the_bills_signature
+      description: Signature for split the bills.
+    - name: unihomes_signature
+      description: Signature for Unihomes.
+    - name: dfsle_can_manage_account
+      description: Indicates if the user can manage DFSLE account.
+    - name: dfsle_status
+      description: Status of the user in DFSLE.
+    - name: dfsle_username
+      description: Username of the user in DFSLE.
+    - name: avatar_url
+      description: URL of the user's avatar.
+    - name: delegated_person
+      description: Delegated person for the user.
+    - name: fivetran_deleted
+      description: Indicates if the record is deleted in Fivetran.
+    - name: has_user_verified_email
+      description: Indicates if the user has verified their email.
+    - name: has_user_verified_phone
+      description: Indicates if the user has verified their phone.

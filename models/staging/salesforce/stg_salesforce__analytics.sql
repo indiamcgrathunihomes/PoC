@@ -15,7 +15,7 @@ snake_case_field_names_and_clean_timestamps as (
 
     select -- Identifiers,
 
-        "ID" as base_salesforce__analytics_with_foreign_key_names_id,
+        "ID" as analytics_id,
 
 
         -- Foreign Keys,

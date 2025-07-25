@@ -1,5 +1,8 @@
 models:
-- name: base_student_marketshare_agent_list
+  # -----------------------------------------------
+  # BREAK:student_marketshare_agent_list
+  # -----------------------------------------------
+- name: student_marketshare_agent_list
   description: This model consolidates data from Salesforce to provide a comprehensive
     list of active customers, opportunities, and leads related to student market share.
     It categorizes records into 'Customer' and 'Prospect' and includes details such
@@ -47,3 +50,26 @@ models:
     description: The current stage of the opportunity or lead in the sales process.
   - name: total_order_forms
     description: The number of order forms from the analytics object in Salesforce, this is currently hard-coded to the current financial year.
+
+
+
+
+  # -----------------------------------------------
+  # BREAK:student_marketshare_by_city
+  # -----------------------------------------------
+  - name: analytics_student_marketshare_city_summary
+    description: This is a simple model to aggregate city level statistics.
+    columns:
+      - name: city_proxy
+      - name: student_letting_agents
+        data_tests:
+          - not_null
+      - name: clients
+        data_tests:
+          - not_null
+      - name: student_portfolio
+        data_tests:
+          - not_null
+      - name: clients_student_portfolio
+        data_tests:
+          - not_null

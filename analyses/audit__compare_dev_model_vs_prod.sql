@@ -5,7 +5,7 @@
     type = "table"
 ) %}
 
-{% set dev_relation = ref('base_student_marketshare_agent_list') %}
+{% set dev_relation = ref('student_marketshare_agent_list') %}
 
 {% set diff_sql %}
     {{ audit_helper.compare_all_columns(

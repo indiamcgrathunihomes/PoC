@@ -23,6 +23,6 @@ select
         case when category = 'Customer' then total_student_portfolio else 0 end
     ) as clients_student_portfolio
 
-from {{ ref("base_student_marketshare_agent_list") }}
+from {{ ref("student_marketshare_agent_list") }}
 group by 1
 order by student_portfolio desc

@@ -1,120 +1,121 @@
 -- Rebuilding query for
 -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OinMAE/view
 with
-    active_customers as (
-        select
-            acc.account_id as salesforce_18_digit_id,
-            acc.account_id as record_id,
-            acc.name as company,
-            acc.name as name,
-            acc.associated_city as associated_city,
-            acc.billing_postal_code as postcode,
-            acc.total_student_portfolio,
-            acc.account_type,
-            'Customer' as category,
-            'Account' as sf_object,
-            null as phone,
-            null as competitor,
-            acc.record_type_name as record_type,
-            null as email,
-            null as stage,
-            ana.total_order_forms
-        from {{ ref("stg_salesforce__accounts") }} acc
-        left join
-            {{ ref('stg_salesforce__analytics') }} ana
-            on acc.account_id = ana.landlord and ana.name = '2025-2026' -- Static filter for the current FY26
-        where
-            1 = 1
-            and acc.record_type_name = 'Landlord/Agent' 
-            and acc.date_closed is null
-            and acc.date_won is not null
-    ),
+client_list_consistent_with_board_kpi_reporting as (
+    select
+        acc.account_id as salesforce_18_digit_id,
+        acc.account_id as record_id,
+        acc.name as company,
+        acc.name,
+        acc.associated_city,
+        acc.billing_postal_code as postcode,
+        acc.total_student_portfolio,
+        acc.account_type,
+        'Customer' as category,
+        'Account' as sf_object,
+        null as phone,
+        null as competitor,
+        acc.record_type_name as record_type,
+        null as email,
+        null as stage,
+        ana.total_order_forms
+    from {{ ref("stg_salesforce__accounts") }} as acc
+    left join
+        {{ ref('stg_salesforce__analytics') }} as ana
+        -- Static filter for the current FY26
+        on acc.account_id = ana.landlord and ana.name = '2025-2026'
+    where
+        1 = 1
+        and acc.record_type_name = 'Landlord/Agent'
+        and acc.date_closed is null
+        and acc.date_won is not null
+),
 
-    active_opps as (
-        -- Rebuilding query for
-        -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069QmDMAU/view
-        select
-            account_id as salesforce_18_digit_id,
-            opportunity_id as record_id,
-            landlord_agent_name as company,
-            account_name as name,
-            account_associated_city as associated_city,
-            account_billing_postal_code as postcode,
-            total_student_portfolio,
-            account_type,
-            'Prospect' as category,
-            'Opportunity' as sf_object,
-            null as phone,
-            competitor_name as competitor,
-            record_type_name as record_type,
-            null as email,
-            null as stage,
-            0 as total_order_forms
-        from {{ ref("int_salesforce__opportunities_enriched") }} opp
-        
-        where
-            1 = 1
-            and account_record_type_name = 'Landlord/Agent'
-            and record_type_name = 'New Business B2B'
-            and account_date_closed is null
-            and account_date_won is null
-            and stage_name in (
-                'Renewal',
-                'Fact Find',
-                'Meeting Booked',
-                'Negotiation',
-                'Agreement Preparation',
-                'Agreement Sent',
-                'Trial'
-            )
-    ),
+active_new_business_b2b_opportunities as (
+    -- Rebuilding query for
+    -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069QmDMAU/view
+    select
+        account_id as salesforce_18_digit_id,
+        opportunity_id as record_id,
+        landlord_agent_name as company,
+        account_name as name,
+        account_associated_city as associated_city,
+        account_billing_postal_code as postcode,
+        total_student_portfolio,
+        account_type,
+        'Prospect' as category,
+        'Opportunity' as sf_object,
+        null as phone,
+        competitor_name as competitor,
+        record_type_name as record_type,
+        null as email,
+        null as stage,
+        0 as total_order_forms
+    from {{ ref("int_salesforce__opportunities_enriched") }}
 
-    valid_leads as (
-        -- Rebuilding query for
-        -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OyvMAE/view
-        select
-            lead_id as salesforce_18_digit_id,
-            lead_id as record_id,
-            company,
-            name as name,
-            associated_city,
-            postal_code as postcode,
-            percentage_student as total_student_portfolio,
-            null as account_type,
-            'Prospect' as category,
-            'Lead' as sf_object,
-            phone,
-            competitor_name as competitor,
-            record_type_name as record_type,
-            email,
-            null as stage,
-            0 as total_order_forms
-        from {{ ref("stg_salesforce__leads") }} 
-        
-        where
-            1 = 1
-            and record_type_name = 'Letting Agent/Landlord' 
-            and main_contact = true
-            and status <> 'Converted'
-            and status in (
-                    'Unqualified this Season', 
-                    'New', 
-                    'Working', 
-                    'Nurture'
-                )
+    where
+        1 = 1
+        and account_record_type_name = 'Landlord/Agent'
+        and record_type_name = 'New Business B2B'
+        and account_date_closed is null
+        and account_date_won is null
+        and stage_name in (
+            'Renewal',
+            'Fact Find',
+            'Meeting Booked',
+            'Negotiation',
+            'Agreement Preparation',
+            'Agreement Sent',
+            'Trial'
+        )
+),
 
-    ),
+valid_prospect_main_contact_leads as (
+    -- Rebuilding query for
+    -- https://unihomes.lightning.force.com/lightning/r/Report/00OUc0000069OyvMAE/view
+    select
+        lead_id as salesforce_18_digit_id,
+        lead_id as record_id,
+        company,
+        name,
+        associated_city,
+        postal_code as postcode,
+        percentage_student as total_student_portfolio,
+        null as account_type,
+        'Prospect' as category,
+        'Lead' as sf_object,
+        phone,
+        competitor_name as competitor,
+        record_type_name as record_type,
+        email,
+        null as stage,
+        0 as total_order_forms
+    from {{ ref("stg_salesforce__leads") }}
 
-    combined_data_table as (
-        select *
-        from active_customers
-        union
-        select *
-        from active_opps
-        union
-        select *
-        from valid_leads
-    )
+    where
+        1 = 1
+        and record_type_name = 'Letting Agent/Landlord'
+        and main_contact = true
+        and status <> 'Converted'
+        and status in (
+            'Unqualified this Season',
+            'New',
+            'Working',
+            'Nurture'
+        )
+
+),
+
+combined_data_table as (
+    select *
+    from client_list_consistent_with_board_kpi_reporting
+    union
+    select *
+    from active_new_business_b2b_opportunities
+    union
+    select *
+    from valid_prospect_main_contact_leads
+)
 
 select *
 from combined_data_table

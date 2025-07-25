@@ -3,9 +3,9 @@ select
     sum(
         case
             when category = 'Customer'
-            then 1
+                then 1
             when total_student_portfolio >= 5
-            then 1
+                then 1
             else 0
         end
     ) as student_letting_agents,
@@ -13,9 +13,9 @@ select
     sum(
         case
             when category = 'Customer'
-            then 1
+                then 1
             when total_student_portfolio >= 5
-            then total_student_portfolio
+                then total_student_portfolio
             else 0
         end
     ) as student_portfolio,
@@ -25,4 +25,3 @@ select
 
 from {{ ref("student_marketshare_agent_list") }}
 group by 1
-order by student_portfolio desc
